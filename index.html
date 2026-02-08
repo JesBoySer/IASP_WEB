@@ -3,286 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SrvMonitor Pro - Ubuntu Server</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Innovación Aplicada a los Sectores Productivos</title>
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-light: #64748b;
-            --code-bg: #1e293b;
-            --green-ui: #10b981;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-dark);
-            margin: 0;
-            display: flex;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
         }
-
-        /* --- SIDEBAR IZQUIERDO --- */
-        aside {
-            width: 300px;
-            background: var(--card-bg);
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .brand { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        
-        .nav-menu { list-style: none; padding: 0; margin: 0; }
-        .nav-menu li { margin-bottom: 0.5rem; }
-        .nav-menu a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            padding: 10px 15px;
-            border-radius: 8px;
-            display: block;
-            transition: 0.3s;
-        }
-        .nav-menu a:hover { background: var(--bg); color: var(--primary); }
-
-        .quick-terminal {
-            background: var(--code-bg);
-            padding: 1rem;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.8rem;
-        }
-        .quick-terminal h4 { color: var(--green-ui); margin-top: 0; font-size: 0.7rem; text-transform: uppercase; }
-
-        /* --- CUERPO PRINCIPAL --- */
-        main {
-            flex: 1;
-            padding: 3rem;
-            max-width: 1000px;
-        }
-
-        header { margin-bottom: 3rem; }
-        header h1 { font-size: 2.5rem; margin: 0; letter-spacing: -1px; }
-        header p { color: var(--text-light); font-size: 1.1rem; }
-
-        .ra-badge {
-            display: inline-block;
-            background: #e0e7ff;
-            color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        /* CARDS */
-        .grid-docs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            border: 1px solid #e2e8f0;
-            transition: transform 0.3s;
-        }
-        .card:hover { transform: translateY(-5px); }
-        .card h2 { margin-top: 0; border-left: 4px solid var(--primary); padding-left: 15px; font-size: 1.3rem; }
-
-        /* CÓDIGO */
-        .code-box {
-            background: var(--code-bg);
-            border-radius: 12px;
-            padding: 1.2rem;
-            position: relative;
-            margin: 1rem 0;
-        }
-        code { color: #f8fafc; font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.5; }
-        
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .copy-btn:hover { background: var(--primary); }
-
-        /* ELEMENTOS DE TEXTO */
-        .diagnostic-step {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #f8fafc;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .diagnostic-step span { background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
-
-        .alert-box {
-            padding: 15px;
+        .container {
+            background-color: #fff;
             border-radius: 10px;
-            font-size: 0.9rem;
-            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-top: 20px;
         }
-        .alert-danger { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
-        .alert-info { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
-
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        h3 {
+            color: #16a085;
+        }
+        h4 {
+            color: #7f8c8d;
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .header-icon {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        .divider {
+            border-top: 2px dashed #bdc3c7;
+            margin: 30px 0;
+        }
+        .metadata {
+            background-color: #f1f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .metadata p {
+            margin: 5px 0;
+        }
+        .objective-item, .learning-result {
+            margin-bottom: 12px;
+            padding-left: 10px;
+        }
+        .sub-item {
+            margin-left: 20px;
+            font-size: 0.95em;
+        }
+        .author {
+            text-align: right;
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ecf0f1;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-
-<aside>
-    <div class="brand"><i class="fas fa-microchip"></i> SrvMonitor</div>
-    
-    <ul class="nav-menu">
-        <li><a href="#cpu-ram"><i class="fas fa-memory"></i> CPU & RAM</a></li>
-        <li><a href="#disk-io"><i class="fas fa-hdd"></i> Disco e I/O</a></li>
-        <li><a href="#logs"><i class="fas fa-stream"></i> Journalctl</a></li>
-        <li><a href="#samba"><i class="fas fa-users-cog"></i> Samba AD</a></li>
-    </ul>
-
-    <div class="quick-terminal">
-        <h4><i class="fas fa-bolt"></i> Acceso Rápido</h4>
-        <p style="margin: 5px 0;">htop</p>
-        <p style="margin: 5px 0;">free -h</p>
-        <p style="margin: 5px 0;">df -h</p>
-        <p style="margin: 5px 0;">journalctl -f</p>
-    </div>
-</aside>
-
-<main>
-    <header>
-        <span class="ra-badge">RA5: Monitorización y Red</span>
-        <h1>Monitorización Ubuntu Server</h1>
-        <p>Estrategias de diagnóstico y herramientas esenciales de línea de comandos.</p>
-    </header>
-
-    <div class="grid-docs">
+    <div class="container">
+        <h1><span class="header-icon">📘</span> Innovación Aplicada a los Sectores Productivos</h1>
         
-        <div class="card">
-            <h2>Estrategia de Diagnóstico</h2>
-            <p>Sigue este orden lógico antes de actuar:</p>
-            <div class="diagnostic-step"><span>1</span> CPU y Procesos</div>
-            <div class="diagnostic-step"><span>2</span> Memoria RAM y Swap</div>
-            <div class="diagnostic-step"><span>3</span> Espacio en Disco</div>
-            <div class="diagnostic-step"><span>4</span> Entrada/Salida (I/O)</div>
-            <div class="diagnostic-step"><span>5</span> Trazas y Logs</div>
+        <div class="section">
+            <p>Repositorio con los materiales didácticos del módulo optativo <strong>Innovación Aplicada a los Sectores Productivos</strong> para Formación Profesional en Castilla y León.</p>
+            <p>Incluye lecciones en formato Markdown, planificaciones y actividades diseñadas para desarrollar la creatividad, la innovación y la sostenibilidad en contextos empresariales y productivos.</p>
         </div>
-
-        <div class="card" id="cpu-ram">
-            <h2>Rendimiento General</h2>
-            <p><strong>HTOP:</strong> Si el sistema responde con lentitud incluso a comandos simples.</p>
-            <div class="code-box">
-                <code>htop -u root</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
-            <p><strong>Memoria RAM:</strong> Comprueba el uso de Swap.</p>
-            <div class="code-box">
-                <code>free -h</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
-            <div class="alert-box alert-info">
-                📌 Uso de Swap constante = Alerta de falta de memoria física.
-            </div>
+        
+        <div class="divider"></div>
+        
+        <h2>INFORMACIÓN GENERAL</h2>
+        <div class="metadata">
+            <p><strong>Nivel educativo:</strong> Formación Profesional (Castilla y León)</p>
+            <p><strong>Módulo profesional:</strong> Innovación aplicada a los sectores productivos (optativo)</p>
+            <p><strong>Duración:</strong> 34 horas totales (2 horas semanales)</p>
+            <p><strong>Ciclo formativo de referencia:</strong> Sistemas Microinformáticos y Redes</p>
         </div>
-
-        <div class="card" id="disk-io">
-            <h2>Gestión de Almacenamiento</h2>
-            <p>Identifica particiones llenas o saturación de lectura/escritura:</p>
-            <div class="code-box">
-                <code>df -h /var<br>sudo iotop -o</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
-            <p>Para localizar qué archivos ocupan más espacio:</p>
-            <div class="code-box">
-                <code>du -sh /var/log/*</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
-            <div class="alert-box alert-danger">
-                ⚠️ Si la partición /var supera el 90%, riesgo de fallo crítico.
-            </div>
+        
+        <h2>DESCRIPCIÓN GENERAL</h2>
+        <div class="section">
+            <p>La innovación es un factor clave para la competitividad, el crecimiento sostenible y la adaptación a un entorno productivo en constante transformación.</p>
+            <p>Este módulo tiene como finalidad proporcionar al alumnado una visión global sobre cómo la innovación se aplica a los distintos sectores, fomentando la creatividad, la capacidad de análisis y el diseño de propuestas innovadoras que respondan a los retos actuales.</p>
         </div>
-
-        <div class="card" id="logs">
-            <h2>Análisis de Logs (Journal)</h2>
-            <p>Ubuntu centraliza todo con <strong>systemd-journald</strong>:</p>
-            <div class="code-box">
-                <code>journalctl -f<br>journalctl -u samba-ad-dc<br>journalctl -p err -b</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
-            <p>Control de tamaño de logs:</p>
-            <div class="code-box">
-                <code>journalctl --vacuum-size=1G</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
+        
+        <h2>OBJETIVOS DEL MÓDULO</h2>
+        <div class="section">
+            <div class="objective-item">- Comprender el papel de la innovación en los sectores productivos y su importancia en la mejora continua de las empresas.</div>
+            <div class="objective-item">- Reconocer la innovación como motor de crecimiento, desarrollo sostenible y transformación digital.</div>
+            <div class="objective-item">- Conocer y aplicar metodologías y herramientas de creatividad e innovación en entornos productivos.</div>
+            <div class="objective-item">- Analizar casos prácticos reales para identificar oportunidades de mejora e innovación.</div>
+            <div class="objective-item">- Desarrollar propuestas innovadoras sencillas y viables, valorando su impacto económico y social.</div>
         </div>
-
-        <div class="card" id="samba">
-            <h2>Salud de Samba AD</h2>
-            <p>Puntos críticos para la red de dominio:</p>
-            <div class="code-box">
-                <code>samba-tool drs showrepl<br>samba-tool dbcheck --cross-ncs<br>samba-tool fsmo show</code>
-                <button class="copy-btn">Copiar</button>
-            </div>
+        
+        <h2>RESULTADOS DE APRENDIZAJE</h2>
+        
+        <h3>RA1. Comprende el concepto de innovación aplicada a los sectores productivos y su importancia en la mejora continua de las empresas.</h3>
+        <div class="sub-item">a) Se ha identificado el concepto de innovación en el contexto empresarial.</div>
+        <div class="sub-item">b) Se ha descrito la relación entre la innovación y la competitividad de las empresas.</div>
+        <div class="sub-item">c) Se han comparado ejemplos concretos de aplicación de innovación en distintos sectores productivos.</div>
+        <div class="sub-item">d) Se ha valorado el papel de la innovación en la sostenibilidad empresarial.</div>
+        
+        <h3>RA2. Reconoce la importancia de la innovación como motor de crecimiento y desarrollo sostenible en los sectores productivos, y su impacto en la gestión empresarial y la transformación digital de las organizaciones.</h3>
+        <div class="sub-item">a) Se ha identificado el impacto de la innovación en la mejora de la eficiencia, calidad y sostenibilidad en los sectores productivos.</div>
+        <div class="sub-item">b) Se ha descrito la influencia de la innovación en la estrategia empresarial, gestión de recursos humanos y otras áreas funcionales de la empresa.</div>
+        <div class="sub-item">c) Se ha identificado el papel de la innovación en la adaptación de las empresas a los cambios del entorno y en la mejora de la competitividad.</div>
+        <div class="sub-item">d) Se han identificado tecnologías emergentes y tendencias innovadoras que están transformando los sectores productivos y su potencial impacto en las empresas.</div>
+        
+        <h3>RA3. Propone ideas innovadoras aplicando técnicas básicas de pensamiento creativo y resolución de problemas en contextos productivos.</h3>
+        <div class="sub-item">a) Se han utilizado herramientas como el Design Thinking, Lean Startup, método Canvas, entre otros, para fomentar la creatividad y generación de ideas innovadoras.</div>
+        <div class="sub-item">b) Se han empleado habilidades básicas de análisis y resolución de problemas para identificar oportunidades de innovación en entornos empresariales del sector.</div>
+        <div class="sub-item">c) Se han diseñado y planificado propuestas de innovación, a nivel introductorio, aplicados a casos prácticos en los sectores productivos.</div>
+        <div class="sub-item">d) Se ha valorado de manera sencilla la viabilidad económica de las propuestas de innovación generadas.</div>
+        <div class="sub-item">e) Se ha presentado un plan de implementación básico para una idea innovadora.</div>
+        
+        <h3>RA4. Identifica oportunidades de mejora e innovación en empresas del sector mediante el análisis de casos prácticos.</h3>
+        <div class="sub-item">a) Se han identificado oportunidades de mejora e innovación en empresas del sector mediante el uso de casos prácticos.</div>
+        <div class="sub-item">b) Se han diseñado propuestas básicas de innovación que aborden desafíos específicos del sector y contribuyan a la mejora de la competitividad y sostenibilidad de las empresas.</div>
+        <div class="sub-item">c) Se ha valorado la viabilidad de implementación de las propuestas de innovación en empresas reales.</div>
+        <div class="sub-item">d) Se han presentado las propuestas básicas de innovación, utilizando habilidades de comunicación efectiva.</div>
+        
+        <h2>CONTENIDOS</h2>
+        
+        <h3>Unidad 1 – Descubriendo la innovación (6h)</h3>
+        <div class="sub-item">1. Qué es innovar (Definición y tipos de innovación).</div>
+        <div class="sub-item">2. La innovación como estrategia (Importancia en la empresa).</div>
+        <div class="sub-item">3. Innovación en acción (Ejemplos en distintos sectores).</div>
+        <div class="sub-item">4. Innovación y sostenibilidad empresarial (Reflexión transversal).</div>
+        
+        <h3>Unidad 2 – Innovación y sostenibilidad en las empresas (8h)</h3>
+        <div class="sub-item">1. Impacto positivo de la innovación (eficiencia, calidad y sostenibilidad).</div>
+        <div class="sub-item">2. Innovación en la estrategia empresarial.</div>
+        <div class="sub-item">3. Nuevas tecnologías que transforman.</div>
+        <div class="sub-item">4. La innovación como motor de adaptación y competitividad.</div>
+        
+        <h3>Unidad 3 – Herramientas para innovar (8h)</h3>
+        <div class="sub-item">1. Diseñando con innovación (Design Thinking, Lean Startup, Canvas).</div>
+        <div class="sub-item">2. Pensar diferente para resolver problemas.</div>
+        <div class="sub-item">3. De la idea al plan.</div>
+        <div class="sub-item">4. Aplicando la innovación a casos prácticos.</div>
+        
+        <h3>Unidad 4 – Innovar en la práctica (12h)</h3>
+        <div class="sub-item">1. Detectando oportunidades de mejora.</div>
+        <div class="sub-item">2. Creando soluciones innovadoras.</div>
+        <div class="sub-item">3. ¿Es viable lo que proponemos?</div>
+        <div class="sub-item">4. Compartiendo nuestras ideas.</div>
+        
+        <div class="author">
+            <p><strong>Autor:</strong> Jesús Boyero Serrano</p>
         </div>
-
-        <div class="card" style="grid-column: 1 / -1;">
-            <h2>Incidente: Caso Real</h2>
-            <p><strong>Síntomas:</strong> Usuarios reportan lentitud al iniciar sesión y fallos al copiar archivos.</p>
-            <div class="alert-box alert-danger" style="display: flex; gap: 20px; align-items: center;">
-                <i class="fas fa-user-shield fa-2x"></i>
-                <div>
-                    <strong>Misión:</strong> Debes usar <code>htop</code> y <code>iotop</code> para identificar procesos, revisar el espacio en <code>/var</code> y analizar errores en <code>journalctl</code>.
-                </div>
-            </div>
-        </div>
-
     </div>
-</main>
-
-<script>
-    // Script de copia al portapapeles mejorado
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const code = btn.parentElement.querySelector('code').innerText;
-            navigator.clipboard.writeText(code);
-            
-            const originalText = btn.innerText;
-            btn.innerText = '¡Copiado!';
-            btn.style.background = '#10b981';
-            
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.background = 'rgba(255,255,255,0.1)';
-            }, 2000);
-        });
-    });
-</script>
-
 </body>
 </html>
