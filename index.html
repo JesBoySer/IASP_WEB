@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SrvMonitor Pro - Ubuntu Server</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
+            --code-bg: #1e293b;
+            --green-ui: #10b981;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            margin: 0;
+            display: flex;
+        }
+
+        /* --- SIDEBAR IZQUIERDO --- */
+        aside {
+            width: 300px;
+            background: var(--card-bg);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .brand { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        
+        .nav-menu { list-style: none; padding: 0; margin: 0; }
+        .nav-menu li { margin-bottom: 0.5rem; }
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: block;
+            transition: 0.3s;
+        }
+        .nav-menu a:hover { background: var(--bg); color: var(--primary); }
+
+        .quick-terminal {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+        .quick-terminal h4 { color: var(--green-ui); margin-top: 0; font-size: 0.7rem; text-transform: uppercase; }
+
+        /* --- CUERPO PRINCIPAL --- */
+        main {
+            flex: 1;
+            padding: 3rem;
+            max-width: 1000px;
+        }
+
+        header { margin-bottom: 3rem; }
+        header h1 { font-size: 2.5rem; margin: 0; letter-spacing: -1px; }
+        header p { color: var(--text-light); font-size: 1.1rem; }
+
+        .ra-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* CARDS */
+        .grid-docs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card h2 { margin-top: 0; border-left: 4px solid var(--primary); padding-left: 15px; font-size: 1.3rem; }
+
+        /* CÓDIGO */
+        .code-box {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            position: relative;
+            margin: 1rem 0;
+        }
+        code { color: #f8fafc; font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.5; }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: var(--primary); }
+
+        /* ELEMENTOS DE TEXTO */
+        .diagnostic-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .diagnostic-step span { background: var(--primary); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+
+        .alert-box {
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        .alert-danger { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
+        .alert-info { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+
+    </style>
+</head>
+<body>
+
+<aside>
+    <div class="brand"><i class="fas fa-microchip"></i> SrvMonitor</div>
+    
+    <ul class="nav-menu">
+        <li><a href="#cpu-ram"><i class="fas fa-memory"></i> CPU & RAM</a></li>
+        <li><a href="#disk-io"><i class="fas fa-hdd"></i> Disco e I/O</a></li>
+        <li><a href="#logs"><i class="fas fa-stream"></i> Journalctl</a></li>
+        <li><a href="#samba"><i class="fas fa-users-cog"></i> Samba AD</a></li>
+    </ul>
+
+    <div class="quick-terminal">
+        <h4><i class="fas fa-bolt"></i> Acceso Rápido</h4>
+        <p style="margin: 5px 0;">htop</p>
+        <p style="margin: 5px 0;">free -h</p>
+        <p style="margin: 5px 0;">df -h</p>
+        <p style="margin: 5px 0;">journalctl -f</p>
+    </div>
+</aside>
+
+<main>
+    <header>
+        <span class="ra-badge">RA5: Monitorización y Red</span>
+        <h1>Monitorización Ubuntu Server</h1>
+        <p>Estrategias de diagnóstico y herramientas esenciales de línea de comandos.</p>
+    </header>
+
+    <div class="grid-docs">
+        
+        <div class="card">
+            <h2>Estrategia de Diagnóstico</h2>
+            <p>Sigue este orden lógico antes de actuar:</p>
+            <div class="diagnostic-step"><span>1</span> CPU y Procesos</div>
+            <div class="diagnostic-step"><span>2</span> Memoria RAM y Swap</div>
+            <div class="diagnostic-step"><span>3</span> Espacio en Disco</div>
+            <div class="diagnostic-step"><span>4</span> Entrada/Salida (I/O)</div>
+            <div class="diagnostic-step"><span>5</span> Trazas y Logs</div>
+        </div>
+
+        <div class="card" id="cpu-ram">
+            <h2>Rendimiento General</h2>
+            <p><strong>HTOP:</strong> Si el sistema responde con lentitud incluso a comandos simples.</p>
+            <div class="code-box">
+                <code>htop -u root</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+            <p><strong>Memoria RAM:</strong> Comprueba el uso de Swap.</p>
+            <div class="code-box">
+                <code>free -h</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+            <div class="alert-box alert-info">
+                📌 Uso de Swap constante = Alerta de falta de memoria física.
+            </div>
+        </div>
+
+        <div class="card" id="disk-io">
+            <h2>Gestión de Almacenamiento</h2>
+            <p>Identifica particiones llenas o saturación de lectura/escritura:</p>
+            <div class="code-box">
+                <code>df -h /var<br>sudo iotop -o</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+            <p>Para localizar qué archivos ocupan más espacio:</p>
+            <div class="code-box">
+                <code>du -sh /var/log/*</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+            <div class="alert-box alert-danger">
+                ⚠️ Si la partición /var supera el 90%, riesgo de fallo crítico.
+            </div>
+        </div>
+
+        <div class="card" id="logs">
+            <h2>Análisis de Logs (Journal)</h2>
+            <p>Ubuntu centraliza todo con <strong>systemd-journald</strong>:</p>
+            <div class="code-box">
+                <code>journalctl -f<br>journalctl -u samba-ad-dc<br>journalctl -p err -b</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+            <p>Control de tamaño de logs:</p>
+            <div class="code-box">
+                <code>journalctl --vacuum-size=1G</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+        </div>
+
+        <div class="card" id="samba">
+            <h2>Salud de Samba AD</h2>
+            <p>Puntos críticos para la red de dominio:</p>
+            <div class="code-box">
+                <code>samba-tool drs showrepl<br>samba-tool dbcheck --cross-ncs<br>samba-tool fsmo show</code>
+                <button class="copy-btn">Copiar</button>
+            </div>
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2>Incidente: Caso Real</h2>
+            <p><strong>Síntomas:</strong> Usuarios reportan lentitud al iniciar sesión y fallos al copiar archivos.</p>
+            <div class="alert-box alert-danger" style="display: flex; gap: 20px; align-items: center;">
+                <i class="fas fa-user-shield fa-2x"></i>
+                <div>
+                    <strong>Misión:</strong> Debes usar <code>htop</code> y <code>iotop</code> para identificar procesos, revisar el espacio en <code>/var</code> y analizar errores en <code>journalctl</code>.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script>
+    // Script de copia al portapapeles mejorado
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const code = btn.parentElement.querySelector('code').innerText;
+            navigator.clipboard.writeText(code);
+            
+            const originalText = btn.innerText;
+            btn.innerText = '¡Copiado!';
+            btn.style.background = '#10b981';
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = 'rgba(255,255,255,0.1)';
+            }, 2000);
+        });
+    });
+</script>
+
+</body>
+</html>

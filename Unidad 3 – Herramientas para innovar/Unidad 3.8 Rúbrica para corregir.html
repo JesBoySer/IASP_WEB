@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📑 Guía de Evaluación: Proyecto de Innovación con IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                            950: '#0a0a0a',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .glass-card { 
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        .glass-dark { 
+            background: rgba(15, 23, 42, 0.8); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+        .gradient-text { 
+            background: linear-gradient(90deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text; 
+            background-size: 200% auto;
+            animation: gradient 8s linear infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #d946ef 50%, #f97316 75%, #f59e0b 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        .hover-lift { transition: all 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); }
+        .scrollbar-dark::-webkit-scrollbar { width: 8px; height: 8px; }
+        .scrollbar-dark::-webkit-scrollbar-track { background: #1e293b; }
+        .scrollbar-dark::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        .scrollbar-dark::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .score-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        .score-1-4 { background-color: #ef4444; color: white; }
+        .score-5 { background-color: #f97316; color: white; }
+        .score-6 { background-color: #eab308; color: black; }
+        .score-7-8 { background-color: #84cc16; color: black; }
+        .score-9-10 { background-color: #10b981; color: white; }
+        .rubric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+        }
+        .rubric-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .rubric-2 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .rubric-3 { background: linear-gradient(135deg, #ec4899, #be185d); }
+        .table-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(30, 41, 59, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-gray-200 min-h-screen">
+    <!-- Header/Navbar -->
+    <header class="glass-dark sticky top-0 z-50 border-b border-gray-800/50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-2 md:mb-0">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur-md opacity-70"></div>
+                        <div class="relative bg-gradient-to-br from-purple-600 to-pink-700 p-3 rounded-full">
+                            <i class="fas fa-clipboard-check text-white text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">📑 Guía de Evaluación</h1>
+                        <p class="text-xs text-gray-400">Proyecto de Innovación con IA - RA4</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="glass-dark px-3 py-1.5 rounded-full text-sm text-green-300 border border-green-900/30">
+                        <i class="fas fa-robot mr-1.5"></i>IA Generativa
+                    </span>
+                    <span class="glass-dark px-3 py-1.5 rounded-full text-sm text-blue-300 border border-blue-900/30">
+                        <i class="fas fa-graduation-cap mr-1.5"></i>RA4
+                    </span>
+                    <button onclick="toggleTheme()" class="glass-dark p-2 rounded-full text-gray-300 hover:text-yellow-300 transition-colors">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Hero Section -->
+        <section class="mb-12">
+            <div class="glass-dark rounded-2xl p-8 mb-6 border-l-4 border-purple-500">
+                <div class="flex flex-col md:flex-row items-start">
+                    <div class="md:w-2/3 md:pr-8">
+                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 gradient-text">
+                            Guía de Evaluación: Proyecto de Innovación con IA
+                        </h1>
+                        <p class="text-lg text-gray-300 mb-6">
+                            Este documento detalla los criterios con los que se evaluará vuestro proyecto de innovación. 
+                            La evaluación se divide en tres bloques fundamentales vinculados al <span class="text-blue-300 font-semibold">Resultado de Aprendizaje 4</span>.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-1.5 bg-purple-900/30 text-purple-300 rounded-full text-sm">
+                                <i class="fas fa-file-alt mr-1"></i>Documentación Técnica
+                            </span>
+                            <span class="px-3 py-1.5 bg-blue-900/30 text-blue-300 rounded-full text-sm">
+                                <i class="fas fa-code mr-1"></i>Prototipo Funcional
+                            </span>
+                            <span class="px-3 py-1.5 bg-pink-900/30 text-pink-300 rounded-full text-sm">
+                                <i class="fas fa-presentation mr-1"></i>Defensa Pública
+                            </span>
+                            <span class="px-3 py-1.5 bg-green-900/30 text-green-300 rounded-full text-sm">
+                                <i class="fas fa-star mr-1"></i>Rúbrica Detallada
+                            </span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 mt-6 md:mt-0">
+                        <div class="glass-dark rounded-xl p-6 border border-gray-700/50">
+                            <h3 class="text-lg font-bold text-white mb-3">📊 Puntuación Total</h3>
+                            <div class="text-center mb-4">
+                                <div class="text-4xl font-bold text-white mb-2">30 pts</div>
+                                <p class="text-gray-400 text-sm">Máxima puntuación posible</p>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">Documentación</span>
+                                    <span class="font-bold text-white">10 pts</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">Prototipo</span>
+                                    <span class="font-bold text-white">10 pts</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">Presentación</span>
+                                    <span class="font-bold text-white">10 pts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resultado de Aprendizaje Section -->
+        <section class="mb-12">
+            <div class="glass-dark rounded-2xl p-6 mb-6 border-l-4 border-blue-500">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
+                    <i class="fas fa-bullseye text-blue-400 mr-3"></i> Resultado de Aprendizaje y Criterios de Evaluación
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-r from-blue-900/30 to-cyan-900/30 p-5 rounded-xl border border-blue-800/30">
+                        <h3 class="text-xl font-bold text-blue-300 mb-3 flex items-center">
+                            <i class="fas fa-graduation-cap text-blue-400 mr-2"></i> Resultado de Aprendizaje (RA4)
+                        </h3>
+                        <p class="text-gray-300">
+                            Desarrolla proyectos de innovación aplicando herramientas de inteligencia artificial 
+                            en el ámbito de los sectores productivos de informática y comunicaciones.
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-5 rounded-xl border border-purple-800/30">
+                        <h3 class="text-xl font-bold text-purple-300 mb-3 flex items-center">
+                            <i class="fas fa-check-circle text-purple-400 mr-2"></i> Criterios de Evaluación
+                        </h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-arrow-right text-purple-400 mt-1 mr-2 text-sm"></i>
+                                <span class="text-gray-300">Documentación técnica del proyecto (Plan de Innovación)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-arrow-right text-purple-400 mt-1 mr-2 text-sm"></i>
+                                <span class="text-gray-300">Prototipo funcional desarrollado con IA generativa</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-arrow-right text-purple-400 mt-1 mr-2 text-sm"></i>
+                                <span class="text-gray-300">Presentación y defensa pública del proyecto</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rúbrica 1: Documentación -->
+        <section class="mb-12">
+            <div class="flex items-center mb-6">
+                <div class="rubric-icon rubric-1">
+                    <i class="fas fa-tools text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">🛠️ Rúbrica 1: Documentación del Proyecto</h2>
+                    <p class="text-gray-400">Plan de Innovación - Evalúa la capacidad de análisis, detección de necesidades y viabilidad</p>
+                </div>
+            </div>
+            
+            <div class="glass-dark rounded-2xl overflow-hidden border border-gray-700/50">
+                <div class="overflow-x-auto scrollbar-dark">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-gray-900/90">Criterio</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-red-900/30">Insuficiente (1-4)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-orange-900/30">Suficiente (5)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-yellow-900/30">Bien (6)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-green-900/30">Notable (7-8)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-emerald-900/30">Sobresaliente (9-10)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Fila 1 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-blue-300 mb-1">Detección de Oportunidades 🔍</div>
+                                    <div class="text-sm text-gray-400">Identificación de problemas reales en el sector TIC</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No identifica problemas reales en el sector TIC.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Identifica un problema, pero la justificación es débil.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Describe el problema y la oportunidad de mejora de forma clara.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Análisis detallado basado en casos prácticos del entorno.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Identificación brillante de una necesidad con datos y contexto real.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 2 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-blue-300 mb-1">Metodología Design Thinking 💡</div>
+                                    <div class="text-sm text-gray-400">Aplicación de fases de empatía y definición</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No aplica las fases de empatía o definición.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Aplica las fases de forma superficial sin conectar con el usuario.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Define un POV (Punto de Vista) coherente con las necesidades.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Uso sólido de herramientas de empatía y definición de requisitos.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Proceso creativo excepcional que justifica cada decisión técnica.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 3 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-blue-300 mb-1">Análisis de Viabilidad (DAFO) 📈</div>
+                                    <div class="text-sm text-gray-400">Evaluación de riesgos y capacidades del equipo</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No evalúa riesgos ni capacidades del equipo.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Matriz DAFO muy básica o inconexa con el proyecto.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Análisis correcto de debilidades y fortalezas internas.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Vincula el DAFO con estrategias para mitigar amenazas.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Análisis estratégico profundo que garantiza la viabilidad real.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 4 -->
+                            <tr class="hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-blue-300 mb-1">Planificación y Objetivos 📅</div>
+                                    <div class="text-sm text-gray-400">Definición de cronograma y objetivos SMART</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">Sin cronograma ni objetivos claros.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Objetivos vagos. Cronograma incompleto.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Objetivos SMART definidos y calendario de tareas básico.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Planificación técnica detallada con hitos claros de control.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Plan de proyecto profesional con gestión eficiente de recursos.</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-6 border-t border-gray-800 bg-gray-900/50">
+                    <div class="flex items-start">
+                        <div class="bg-blue-900/30 p-3 rounded-lg mr-4">
+                            <i class="fas fa-lightbulb text-blue-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-blue-300 text-lg mb-2">💡 Consejo para Documentación</h4>
+                            <p class="text-gray-300">
+                                Una documentación bien estructurada no solo demuestra tu capacidad de análisis, sino que también 
+                                facilita la ejecución del proyecto. Incluye diagramas, casos de uso y referencias a metodologías 
+                                específicas del sector TIC.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rúbrica 2: Prototipo -->
+        <section class="mb-12">
+            <div class="flex items-center mb-6">
+                <div class="rubric-icon rubric-2">
+                    <i class="fas fa-robot text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">🤖 Rúbrica 2: El Prototipo (MVP en Google AI Studio)</h2>
+                    <p class="text-gray-400">Evalúa la aplicación técnica y el uso innovador de la Inteligencia Artificial</p>
+                </div>
+            </div>
+            
+            <div class="glass-dark rounded-2xl overflow-hidden border border-gray-700/50">
+                <div class="overflow-x-auto scrollbar-dark">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-gray-900/90">Criterio</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-red-900/30">Insuficiente (1-4)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-orange-900/30">Suficiente (5)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-yellow-900/30">Bien (6)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-green-900/30">Notable (7-8)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-emerald-900/30">Sobresaliente (9-10)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Fila 1 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-purple-300 mb-1">Funcionalidad del MVP ⚙️</div>
+                                    <div class="text-sm text-gray-400">Cumplimiento del propósito y estabilidad del prototipo</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">El prototipo no funciona o no cumple su fin.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Funciona parcialmente pero tiene errores críticos de lógica.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">El prototipo realiza las funciones básicas de forma estable.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">MVP robusto que soluciona el problema de forma eficiente.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Solución técnica impecable que aporta un valor diferencial claro.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 2 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-purple-300 mb-1">Ingeniería de Prompts ✍️</div>
+                                    <div class="text-sm text-gray-400">Calidad y efectividad de las instrucciones dadas a la IA</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">Prompts genéricos que dan resultados pobres.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Prompts básicos. La IA no está bien dirigida.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Uso de instrucciones de sistema para guiar la respuesta.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Optimización de variables y contexto para respuestas precisas.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Dominio avanzado de técnicas de prompting (Few-shot, Chain of thought).</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 3 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-purple-300 mb-1">Integración Tecnológica 💻</div>
+                                    <div class="text-sm text-gray-400">Relación entre la IA y el sector SMR/Informática</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No hay relación entre la IA y el sector SMR.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Aplicación de IA simple sin valor técnico añadido.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">La IA mejora un proceso técnico del sector productivo.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Uso innovador de la IA para optimizar servicios o redes.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Integración creativa que transforma un proceso tradicional.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 4 -->
+                            <tr class="hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-purple-300 mb-1">Escalabilidad y Mejora 🚀</div>
+                                    <div class="text-sm text-gray-400">Visión futura y plan de evolución del producto</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No plantea cómo mejorar el producto.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Menciona mejoras futuras de forma muy genérica.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Identifica puntos de mejora técnica tras el prototipado.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Propone una hoja de ruta clara para escalar la solución.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Visión estratégica sobre la evolución tecnológica del producto.</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-6 border-t border-gray-800 bg-gray-900/50">
+                    <div class="flex items-start">
+                        <div class="bg-purple-900/30 p-3 rounded-lg mr-4">
+                            <i class="fas fa-code text-purple-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-purple-300 text-lg mb-2">💻 Clave para el Prototipo</h4>
+                            <p class="text-gray-300">
+                                No se trata solo de que funcione, sino de demostrar cómo la IA puede transformar procesos 
+                                del sector TIC. Documenta bien tu proceso de prompting y cómo cada iteración mejoró el resultado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rúbrica 3: Presentación -->
+        <section class="mb-12">
+            <div class="flex items-center mb-6">
+                <div class="rubric-icon rubric-3">
+                    <i class="fas fa-microphone text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white">📢 Rúbrica 3: Presentación y Comunicación</h2>
+                    <p class="text-gray-400">Evalúa la capacidad de presentar ideas y convencer sobre su utilidad</p>
+                </div>
+            </div>
+            
+            <div class="glass-dark rounded-2xl overflow-hidden border border-gray-700/50">
+                <div class="overflow-x-auto scrollbar-dark">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="table-header">
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-gray-900/90">Criterio</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-red-900/30">Insuficiente (1-4)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-orange-900/30">Suficiente (5)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-yellow-900/30">Bien (6)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-green-900/30">Notable (7-8)</th>
+                                <th class="py-4 px-4 text-left font-bold text-gray-300 border-b border-gray-800 bg-emerald-900/30">Sobresaliente (9-10)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Fila 1 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-pink-300 mb-1">Estructura y Apoyo Visual 🖼️</div>
+                                    <div class="text-sm text-gray-400">Calidad del diseño y efectividad de los elementos visuales</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">Presentación caótica o con exceso de texto.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Estructura básica pero poco atractiva visualmente.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Diseño claro que apoya los puntos clave de la innovación.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Presentación profesional con excelente uso de gráficos y demo.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Impacto visual excepcional que facilita la comprensión técnica.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 2 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-pink-300 mb-1">Habilidades Orales 🗣️</div>
+                                    <div class="text-sm text-gray-400">Fluidez, tono y claridad en la exposición</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">Lectura directa, tono monótono y falta de orden.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Habla con inseguridad pero se entiende el mensaje.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Tono adecuado y discurso fluido durante la exposición.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Comunicación efectiva, segura y con buen ritmo narrativo.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Gran capacidad de oratoria y dominio del lenguaje técnico.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 3 -->
+                            <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-pink-300 mb-1">Defensa del Proyecto 🛡️</div>
+                                    <div class="text-sm text-gray-400">Capacidad para responder preguntas y justificar decisiones</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No sabe responder a las dudas planteadas.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Responde con dudas a las preguntas del tribunal.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Justifica las decisiones tomadas ante preguntas críticas.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Responde con solvencia y criterio técnico a cualquier duda.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Defensa brillante que demuestra dominio total del sector y la IA.</span>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila 4 -->
+                            <tr class="hover:bg-gray-800/30 transition-colors">
+                                <td class="py-4 px-4 align-top">
+                                    <div class="font-bold text-pink-300 mb-1">Gestión del Cambio 🔄</div>
+                                    <div class="text-sm text-gray-400">Explicación del impacto y adaptación en la empresa</div>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-red-900/10">
+                                    <span class="score-badge score-1-4">1-4</span>
+                                    <span class="text-gray-300">No explica cómo afectará la idea a la empresa.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-orange-900/10">
+                                    <span class="score-badge score-5">5</span>
+                                    <span class="text-gray-300">Menciona el impacto de forma superficial.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-yellow-900/10">
+                                    <span class="score-badge score-6">6</span>
+                                    <span class="text-gray-300">Explica cómo se adaptaría la empresa a esta innovación.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-green-900/10">
+                                    <span class="score-badge score-7-8">7-8</span>
+                                    <span class="text-gray-300">Describe estrategias para vencer la resistencia al cambio.</span>
+                                </td>
+                                <td class="py-4 px-4 align-top bg-emerald-900/10">
+                                    <span class="score-badge score-9-10">9-10</span>
+                                    <span class="text-gray-300">Propone un plan de gestión del cambio convincente y realista.</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-6 border-t border-gray-800 bg-gray-900/50">
+                    <div class="flex items-start">
+                        <div class="bg-pink-900/30 p-3 rounded-lg mr-4">
+                            <i class="fas fa-microphone-alt text-pink-400 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-pink-300 text-lg mb-2">🎤 Consejo para la Presentación</h4>
+                            <p class="text-gray-300">
+                                Practica tu presentación varias veces. No solo memorices el contenido, sino que debes ser capaz 
+                                de explicarlo de manera natural y responder preguntas inesperadas. Un buen demo en vivo vale más 
+                                que mil diapositivas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resumen y Consejos -->
+        <section class="mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">              
+                <div class="glass-dark rounded-2xl p-6 border-l-4 border-purple-500">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-lightbulb text-purple-400 mr-3"></i> Puntos Clave para el Éxito
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                            <span class="text-gray-300">Enfócate en un problema real del sector TIC/SMR</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                            <span class="text-gray-300">Documenta cada paso del proceso de Design Thinking</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                            <span class="text-gray-300">Optimiza tus prompts iterativamente</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                            <span class="text-gray-300">Practica la presentación múltiples veces</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass-dark rounded-2xl p-6 border-l-4 border-green-500">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-award text-green-400 mr-3"></i> Niveles de Excelencia
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <div class="score-badge score-9-10">9-10</div>
+                            <span class="text-gray-300">Proyecto excepcional con impacto demostrable</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="score-badge score-7-8">7-8</div>
+                            <span class="text-gray-300">Proyecto robusto con buena implementación</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="score-badge score-6">6</div>
+                            <span class="text-gray-300">Cumple con los requisitos básicos</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="score-badge score-5">5</div>
+                            <span class="text-gray-300">Necesita mejoras significativas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="mt-12 flex justify-center">
+            <a href="index.html" class="glass-dark px-8 py-4 rounded-xl hover:bg-gray-900/30 transition-colors flex items-center">
+                <i class="fas fa-list mr-3"></i> Volver al Índice de Lecciones
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-dark border-t border-gray-800/50 py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-lg font-bold text-white">📑 Guía de Evaluación RA4</h3>
+                    <p class="text-gray-400 text-sm">Proyecto de Innovación con Inteligencia Artificial</p>
+                    <div class="mt-2 flex space-x-2">
+                        <span class="text-xs bg-purple-900/30 px-2 py-1 rounded">IA Generativa</span>
+                        <span class="text-xs bg-blue-900/30 px-2 py-1 rounded">Evaluación por Rúbricas</span>
+                        <span class="text-xs bg-green-900/30 px-2 py-1 rounded">Google AI Studio</span>
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">30</div>
+                        <div class="text-gray-400 text-xs">Puntos Totales</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">3</div>
+                        <div class="text-gray-400 text-xs">Rúbricas</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">12</div>
+                        <div class="text-gray-400 text-xs">Criterios</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-800/50 text-center text-gray-500 text-sm">
+                <p>© 2024 - Material educativo para Formación Profesional - Innovación con IA</p>
+                <p class="mt-1">Esta guía de evaluación sigue los criterios del Resultado de Aprendizaje 4 del currículo de Castilla y León.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 glass-dark p-3 rounded-full shadow-lg hover:shadow-xl transition-all z-40">
+        <i class="fas fa-arrow-up text-white text-xl"></i>
+    </button>
+
+    <script>
+        // Toggle theme function
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (body.classList.contains('bg-dark-950')) {
+                // Switch to light theme
+                body.classList.remove('bg-dark-950', 'text-gray-200');
+                body.classList.add('bg-gray-50', 'text-gray-800');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                // Switch to dark theme
+                body.classList.remove('bg-gray-50', 'text-gray-800');
+                body.classList.add('bg-dark-950', 'text-gray-200');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Add interactivity to table rows
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    this.classList.toggle('bg-gray-800/50');
+                });
+            });
+            
+            // Highlight current score range on hover
+            const scoreCells = document.querySelectorAll('td[class*="bg-"]:not(.table-header *)');
+            scoreCells.forEach(cell => {
+                cell.addEventListener('mouseenter', function() {
+                    const bgClass = Array.from(this.classList).find(c => c.startsWith('bg-'));
+                    if (bgClass) {
+                        this.classList.add('ring-2', 'ring-white', 'ring-opacity-30');
+                    }
+                });
+                cell.addEventListener('mouseleave', function() {
+                    this.classList.remove('ring-2', 'ring-white', 'ring-opacity-30');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
