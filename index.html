@@ -3,189 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovación Aplicada a los Sectores Productivos</title>
+    <title>InnovaConsulting · Proyecto InnovacreaWork</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
         }
+
         .container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            margin-top: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        h1 {
+
+        /* Header / Tarjeta principal */
+        .hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero .badge {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #2d3748;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Tarjetas de fases - cada una con su color */
+        .fases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .fase-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+        }
+
+        /* Colores identificativos para cada fase */
+        .fase-card.fase1::before { background: #3b82f6; }
+        .fase-card.fase2::before { background: #f59e0b; }
+        .fase-card.fase3::before { background: #10b981; }
+        .fase-card.fase4::before { background: #8b5cf6; }
+
+        .fase-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .fase-numero {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .fase1 .fase-numero { color: #3b82f6; }
+        .fase2 .fase-numero { color: #f59e0b; }
+        .fase3 .fase-numero { color: #10b981; }
+        .fase4 .fase-numero { color: #8b5cf6; }
+
+        .fase-card h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .fase-card p {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .entregable {
+            background: #f0f4f8;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            border-left: 4px solid;
+        }
+
+        .fase1 .entregable { border-left-color: #3b82f6; }
+        .fase2 .entregable { border-left-color: #f59e0b; }
+        .fase3 .entregable { border-left-color: #10b981; }
+        .fase4 .entregable { border-left-color: #8b5cf6; }
+
+        .entregable strong {
             color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-top: 0;
+            display: block;
+            margin-bottom: 0.3rem;
         }
-        h2 {
-            color: #2980b9;
-            margin-top: 30px;
-            padding-bottom: 5px;
-            border-bottom: 2px solid #ecf0f1;
+
+        .btn-fase {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            display: inline-block;
+            transition: opacity 0.2s;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
-        h3 {
-            color: #16a085;
+
+        .fase1 .btn-fase { background: #3b82f6; }
+        .fase2 .btn-fase { background: #f59e0b; }
+        .fase3 .btn-fase { background: #10b981; }
+        .fase4 .btn-fase { background: #8b5cf6; }
+
+        .btn-fase:hover {
+            opacity: 0.9;
         }
-        h4 {
-            color: #7f8c8d;
+
+        /* Nuevo diseño del calendario - más atractivo */
+        .calendario {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .section {
-            margin-bottom: 25px;
+
+        .calendario h3 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .highlight {
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin: 15px 0;
+
+        .calendario h3::before {
+            content: '📅';
+            font-size: 2rem;
         }
-        ul, ol {
-            padding-left: 20px;
+
+        .timeline-moderno {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
-        li {
-            margin-bottom: 8px;
+
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-        .header-icon {
-            font-size: 1.2em;
-            margin-right: 10px;
+
+        .timeline-sesion {
+            background: #1e293b;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 90px;
+            text-align: center;
         }
-        .divider {
-            border-top: 2px dashed #bdc3c7;
-            margin: 30px 0;
+
+        .timeline-barra {
+            flex: 1;
+            height: 60px;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 250px;
         }
-        .metadata {
-            background-color: #f1f8ff;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+
+        /* Colores de las barras según fase */
+        .barra-fase1 { background: #3b82f6; }
+        .barra-fase2 { background: #f59e0b; }
+        .barra-fase3 { background: #10b981; }
+        .barra-fase4 { background: #8b5cf6; }
+        .barra-fase5 { background: linear-gradient(90deg, #3b82f6, #8b5cf6); } /* Sesión mixta */
+
+        .timeline-check {
+            font-size: 1.5rem;
+            margin-left: auto;
         }
-        .metadata p {
-            margin: 5px 0;
+
+        .timeline-detalle {
+            width: 100%;
+            padding-left: calc(90px + 1rem);
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
         }
-        .objective-item, .learning-result {
-            margin-bottom: 12px;
-            padding-left: 10px;
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
         }
-        .sub-item {
-            margin-left: 20px;
-            font-size: 0.95em;
+
+        .footer a {
+            color: white;
+            text-decoration: underline;
         }
-        .author {
-            text-align: right;
-            font-style: italic;
-            color: #7f8c8d;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #ecf0f1;
-        }
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 20px;
-            }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .timeline-row { flex-direction: column; align-items: flex-start; }
+            .timeline-detalle { padding-left: 0; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><span class="header-icon">📘</span> Innovación Aplicada a los Sectores Productivos</h1>
-        
-        <div class="section">
-            <p>Repositorio con los materiales didácticos del módulo optativo <strong>Innovación Aplicada a los Sectores Productivos</strong> para Formación Profesional en Castilla y León.</p>
-            <p>Incluye lecciones en formato Markdown, planificaciones y actividades diseñadas para desarrollar la creatividad, la innovación y la sostenibilidad en contextos empresariales y productivos.</p>
+        <!-- Cabecera principal (sin la línea del cliente) -->
+        <div class="hero">
+            <h1>🚀 InnovaConsulting</h1>
+            <div class="badge">Proyecto de recuperación · InnovacreaWork ANPE</div>
+            <p>
+                Ayudamos a nuestros compañeros de instituto a convertir su idea en un 
+                prototipo funcional con IA, preparando la documentación y el pitch 
+                para el concurso.
+            </p>
         </div>
-        
-        <div class="divider"></div>
-        
-        <h2>INFORMACIÓN GENERAL</h2>
-        <div class="metadata">
-            <p><strong>Nivel educativo:</strong> Formación Profesional (Castilla y León)</p>
-            <p><strong>Módulo profesional:</strong> Innovación aplicada a los sectores productivos (optativo)</p>
-            <p><strong>Duración:</strong> 34 horas totales (2 horas semanales)</p>
-            <p><strong>Ciclo formativo de referencia:</strong> Sistemas Microinformáticos y Redes</p>
+
+        <!-- Grid de fases del proyecto con colores -->
+        <div class="fases-grid">
+            <!-- Fase 1: Briefing (Azul) -->
+            <div class="fase-card fase1">
+                <div class="fase-numero">01</div>
+                <h2>Briefing</h2>
+                <p>Análisis de la necesidad del cliente y especificaciones iniciales.</p>
+                <div class="entregable">
+                    <strong>📋 Entregable:</strong>
+                    Documento de Briefing cumplimentado (análisis de requisitos y viabilidad).
+                </div>
+                <a href="fase1-briefing.html" class="btn-fase">Ir a la fase →</a>
+            </div>
+            <!-- Fase 2: Diario de creación (Naranja) -->
+            <div class="fase-card fase2">
+                <div class="fase-numero">02</div>
+                <h2>Diario de creación</h2>
+                <p>Prototipado con IA, prompts, iteraciones y solución final.</p>
+                <div class="entregable">
+                    <strong>🤖 Entregable:</strong>
+                    Enlace al prototipo + Diario con prompts y decisiones técnicas.
+                </div>
+                <a href="fase2-diario-creacion.html" class="btn-fase">Ir a la fase →</a>
+            </div>
+            <!-- Fase 3: Manual de usuario (Verde) -->
+            <div class="fase-card fase3">
+                <div class="fase-numero">03</div>
+                <h2>Manual de usuario</h2>
+                <p>Documentación técnica y guía de uso siguiendo normas de estilo.</p>
+                <div class="entregable">
+                    <strong>📚 Entregable:</strong>
+                    Manual completo (objetivo, uso, tecnología, limitaciones).
+                </div>
+                <a href="fase3-manual-usuario.html" class="btn-fase">Ir a la fase →</a>
+            </div>
+            <!-- Fase 4: Presentación (Púrpura) -->
+            <div class="fase-card fase4">
+                <div class="fase-numero">04</div>
+                <h2>Presentación</h2>
+                <p>Pitch final para el concurso y defensa del proyecto.</p>
+                <div class="entregable">
+                    <strong>🎤 Entregable:</strong>
+                    Archivo de presentación (PPT/Canva) y guion.
+                </div>
+                <a href="fase4-presentacion.html" class="btn-fase">Ir a la fase →</a>
+            </div>
         </div>
-        
-        <h2>DESCRIPCIÓN GENERAL</h2>
-        <div class="section">
-            <p>La innovación es un factor clave para la competitividad, el crecimiento sostenible y la adaptación a un entorno productivo en constante transformación.</p>
-            <p>Este módulo tiene como finalidad proporcionar al alumnado una visión global sobre cómo la innovación se aplica a los distintos sectores, fomentando la creatividad, la capacidad de análisis y el diseño de propuestas innovadoras que respondan a los retos actuales.</p>
+
+        <!-- Nuevo calendario visual -->
+        <div class="calendario">
+            <h3>Calendario de entregas (recuperación)</h3>
+            <div class="timeline-moderno">
+                <!-- Sesión 1 -->
+                <div class="timeline-row">
+                    <span class="timeline-sesion">Sesión 1</span>
+                    <div class="timeline-barra barra-fase1">
+                        <span>📋 Briefing</span>
+                        <span class="timeline-check">📄</span>
+                    </div>
+                </div>
+                <div class="timeline-detalle">
+                    <strong style="color: #3b82f6;">Fase 1:</strong> Entrevista con cliente y entrega del documento de especificaciones.
+                </div>
+
+                <!-- Sesión 2 -->
+                <div class="timeline-row">
+                    <span class="timeline-sesion">Sesión 2</span>
+                    <div class="timeline-barra barra-fase2">
+                        <span>🤖 Diario de creación</span>
+                        <span class="timeline-check">⚡</span>
+                    </div>
+                </div>
+                <div class="timeline-detalle">
+                    <strong style="color: #f59e0b;">Fase 2:</strong> Prototipado con IA y documentación del proceso.
+                </div>
+
+                <!-- Sesión 3 -->
+                <div class="timeline-row">
+                    <span class="timeline-sesion">Sesión 3</span>
+                    <div class="timeline-barra barra-fase3">
+                        <span>📚 Manual de usuario</span>
+                        <span class="timeline-check">📘</span>
+                    </div>
+                </div>
+                <div class="timeline-detalle">
+                    <strong style="color: #10b981;">Fase 3:</strong> Redacción de la documentación técnica.
+                </div>
+
+                <!-- Sesión 4 -->
+                <div class="timeline-row">
+                    <span class="timeline-sesion">Sesión 4</span>
+                    <div class="timeline-barra barra-fase4">
+                        <span>🎤 Preparación del pitch</span>
+                        <span class="timeline-check">📊</span>
+                    </div>
+                </div>
+                <div class="timeline-detalle">
+                    <strong style="color: #8b5cf6;">Fase 4:</strong> Creación de la presentación y guion.
+                </div>
+
+                <!-- Sesión 5 (mixta) -->
+                <div class="timeline-row">
+                    <span class="timeline-sesion">Sesión 5</span>
+                    <div class="timeline-barra barra-fase5">
+                        <span>🎯 Presentación final + coevaluación</span>
+                        <span class="timeline-check">🏆</span>
+                    </div>
+                </div>
+                <div class="timeline-detalle">
+                    <strong style="color: #667eea;">Fase 1-4:</strong> Defensa ante cliente y profesor. Entrega final.
+                </div>
+            </div>
         </div>
-        
-        <h2>OBJETIVOS DEL MÓDULO</h2>
-        <div class="section">
-            <div class="objective-item">- Comprender el papel de la innovación en los sectores productivos y su importancia en la mejora continua de las empresas.</div>
-            <div class="objective-item">- Reconocer la innovación como motor de crecimiento, desarrollo sostenible y transformación digital.</div>
-            <div class="objective-item">- Conocer y aplicar metodologías y herramientas de creatividad e innovación en entornos productivos.</div>
-            <div class="objective-item">- Analizar casos prácticos reales para identificar oportunidades de mejora e innovación.</div>
-            <div class="objective-item">- Desarrollar propuestas innovadoras sencillas y viables, valorando su impacto económico y social.</div>
-        </div>
-        
-        <h2>RESULTADOS DE APRENDIZAJE</h2>
-        
-        <h3>RA1. Comprende el concepto de innovación aplicada a los sectores productivos y su importancia en la mejora continua de las empresas.</h3>
-        <div class="sub-item">a) Se ha identificado el concepto de innovación en el contexto empresarial.</div>
-        <div class="sub-item">b) Se ha descrito la relación entre la innovación y la competitividad de las empresas.</div>
-        <div class="sub-item">c) Se han comparado ejemplos concretos de aplicación de innovación en distintos sectores productivos.</div>
-        <div class="sub-item">d) Se ha valorado el papel de la innovación en la sostenibilidad empresarial.</div>
-        
-        <h3>RA2. Reconoce la importancia de la innovación como motor de crecimiento y desarrollo sostenible en los sectores productivos, y su impacto en la gestión empresarial y la transformación digital de las organizaciones.</h3>
-        <div class="sub-item">a) Se ha identificado el impacto de la innovación en la mejora de la eficiencia, calidad y sostenibilidad en los sectores productivos.</div>
-        <div class="sub-item">b) Se ha descrito la influencia de la innovación en la estrategia empresarial, gestión de recursos humanos y otras áreas funcionales de la empresa.</div>
-        <div class="sub-item">c) Se ha identificado el papel de la innovación en la adaptación de las empresas a los cambios del entorno y en la mejora de la competitividad.</div>
-        <div class="sub-item">d) Se han identificado tecnologías emergentes y tendencias innovadoras que están transformando los sectores productivos y su potencial impacto en las empresas.</div>
-        
-        <h3>RA3. Propone ideas innovadoras aplicando técnicas básicas de pensamiento creativo y resolución de problemas en contextos productivos.</h3>
-        <div class="sub-item">a) Se han utilizado herramientas como el Design Thinking, Lean Startup, método Canvas, entre otros, para fomentar la creatividad y generación de ideas innovadoras.</div>
-        <div class="sub-item">b) Se han empleado habilidades básicas de análisis y resolución de problemas para identificar oportunidades de innovación en entornos empresariales del sector.</div>
-        <div class="sub-item">c) Se han diseñado y planificado propuestas de innovación, a nivel introductorio, aplicados a casos prácticos en los sectores productivos.</div>
-        <div class="sub-item">d) Se ha valorado de manera sencilla la viabilidad económica de las propuestas de innovación generadas.</div>
-        <div class="sub-item">e) Se ha presentado un plan de implementación básico para una idea innovadora.</div>
-        
-        <h3>RA4. Identifica oportunidades de mejora e innovación en empresas del sector mediante el análisis de casos prácticos.</h3>
-        <div class="sub-item">a) Se han identificado oportunidades de mejora e innovación en empresas del sector mediante el uso de casos prácticos.</div>
-        <div class="sub-item">b) Se han diseñado propuestas básicas de innovación que aborden desafíos específicos del sector y contribuyan a la mejora de la competitividad y sostenibilidad de las empresas.</div>
-        <div class="sub-item">c) Se ha valorado la viabilidad de implementación de las propuestas de innovación en empresas reales.</div>
-        <div class="sub-item">d) Se han presentado las propuestas básicas de innovación, utilizando habilidades de comunicación efectiva.</div>
-        
-        <h2>CONTENIDOS</h2>
-        
-        <h3>Unidad 1 – Descubriendo la innovación (6h)</h3>
-        <div class="sub-item">1. Qué es innovar (Definición y tipos de innovación).</div>
-        <div class="sub-item">2. La innovación como estrategia (Importancia en la empresa).</div>
-        <div class="sub-item">3. Innovación en acción (Ejemplos en distintos sectores).</div>
-        <div class="sub-item">4. Innovación y sostenibilidad empresarial (Reflexión transversal).</div>
-        
-        <h3>Unidad 2 – Innovación y sostenibilidad en las empresas (8h)</h3>
-        <div class="sub-item">1. Impacto positivo de la innovación (eficiencia, calidad y sostenibilidad).</div>
-        <div class="sub-item">2. Innovación en la estrategia empresarial.</div>
-        <div class="sub-item">3. Nuevas tecnologías que transforman.</div>
-        <div class="sub-item">4. La innovación como motor de adaptación y competitividad.</div>
-        
-        <h3>Unidad 3 – Herramientas para innovar (8h)</h3>
-        <div class="sub-item">1. Diseñando con innovación (Design Thinking, Lean Startup, Canvas).</div>
-        <div class="sub-item">2. Pensar diferente para resolver problemas.</div>
-        <div class="sub-item">3. De la idea al plan.</div>
-        <div class="sub-item">4. Aplicando la innovación a casos prácticos.</div>
-        
-        <h3>Unidad 4 – Innovar en la práctica (12h)</h3>
-        <div class="sub-item">1. Detectando oportunidades de mejora.</div>
-        <div class="sub-item">2. Creando soluciones innovadoras.</div>
-        <div class="sub-item">3. ¿Es viable lo que proponemos?</div>
-        <div class="sub-item">4. Compartiendo nuestras ideas.</div>
-        
-        <div class="author">
-            <p><strong>Autor:</strong> Jesús Boyero Serrano</p>
+
+        <div class="footer">
+            <p>Proyecto de recuperación · Asignatura Innovación aplicada al sector productivo</p>
+            <p>✨ Colaboración con compañeros de Instituto para InnovacreaWork ANPE</p>
         </div>
     </div>
 </body>

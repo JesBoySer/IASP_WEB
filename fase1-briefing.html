@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fase 1 · Briefing | InnovaConsulting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #2563eb; padding: 2rem 1rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        /* Cabecera con color de fase */
+        .header-bar {
+            background: white; border-radius: 2rem; padding: 1.5rem 2rem; margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 1rem; border-left: 8px solid #3b82f6;
+        }
+        .header-bar h1 { font-size: 2rem; color: #3b82f6; }
+        .btn-volver { background: #e9ecef; color: #2d3748; padding: 0.5rem 1.5rem; border-radius: 2rem; text-decoration: none; font-weight: 600; }
+        
+        .card { background: white; border-radius: 2rem; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .card h2 { font-size: 1.8rem; color: #2d3748; margin-bottom: 1.5rem; border-left: 8px solid #3b82f6; padding-left: 1rem; }
+        
+        /* Estilos para la guía */
+        .guia-estilo {
+            background: #f1f5f9;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 2px solid #3b82f6;
+        }
+        .guia-estilo h3 {
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .guia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .guia-item {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            border-left: 4px solid #3b82f6;
+        }
+        .guia-item strong {
+            display: block;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .guia-item p {
+            color: #334155;
+            font-size: 0.95rem;
+        }
+        
+        /* Tarea 1 y 2 */
+        .tarea-box {
+            background: #ede9fe;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #3b82f6;
+        }
+        .tarea-box h4 {
+            color: #1e1b4b;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Plantilla */
+        .plantilla {
+            background: #f1f5f9;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 2px dashed #3b82f6;
+        }
+        .plantilla h3 {
+            color: #0f172a;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .campo {
+            margin-bottom: 1.5rem;
+        }
+        .campo label {
+            font-weight: 700;
+            color: #334155;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .campo .placeholder {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            color: #64748b;
+        }
+        
+        .btn-descargar {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .footer { text-align: center; margin-top: 2rem; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <h1>📋 Fase 1 · Briefing</h1>
+            <a href="index.html" class="btn-volver">← Volver al inicio</a>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Objetivo de la fase</h2>
+            <p style="font-size: 1.2rem; color: #334155; margin-bottom: 1rem;">
+                Actuar como consultores tecnológicos: realizar una entrevista de toma de requisitos a los compañeros de InnovacreaWork y documentarlo profesionalmente.
+            </p>
+            <div style="background: #e6f0ff; padding: 1rem; border-radius: 1rem;">
+                <p style="margin: 0;"><strong>⚠️ Importante:</strong> Esta fase tiene <strong>dos tareas diferenciadas</strong>. Debes completar ambas para superar la recuperación.</p>
+            </div>
+        </div>
+
+        <!-- TAREA 1: Documento individual -->
+        <div class="card">
+            <h2>📌 Tarea 1 · Preparación individual</h2>
+            <div class="tarea-box">
+                <h4>📄 Crear tu propio documento de Briefing</h4>
+                <p style="margin-bottom: 1rem;">Antes de la reunión con el cliente, cada alumno debe generar un fichero de briefing <strong>vacío pero con la estructura correcta</strong>, aplicando las normas de estilo.</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;">
+                    <li>El documento debe contener <strong>todos los apartados</strong> indicados en la plantilla.</li>
+                    <li>Debe cumplir <strong>estrictamente</strong> la guía de estilo corporativa (tipografía, márgenes, tablas...).</li>
+                    <li>Subirás este documento <strong>antes de la reunión</strong> para verificar que el formato es correcto.</li>
+                </ul>
+                <p><strong>🏷️ Nombre del archivo:</strong> <code>Apellido1_Apellido2_Nombre_Briefing_Innovacrea.pdf</code></p>
+            </div>
+        </div>
+
+        <!-- Guía de estilo corporativa -->
+        <div class="card">
+            <h2>📐 Guía de Estilo Corporativa</h2>
+            <div class="guia-estilo">
+                <h3>📏 Requisitos obligatorios de formato</h3>
+                <div class="guia-grid">
+                    <div class="guia-item">
+                        <strong>🖋️ Tipografía</strong>
+                        <p>Cuerpo: Arial o Calibri 11pt<br>Subtítulos: 12pt negrita<br>Títulos: 14pt negrita</p>
+                    </div>
+                    <div class="guia-item">
+                        <strong>📝 Interlineado</strong>
+                        <p>1,15 líneas<br>Espaciado posterior: 12pt<br>Alineación: justificada</p>
+                    </div>
+                    <div class="guia-item">
+                        <strong>📏 Márgenes</strong>
+                        <p>Superior/Inferior: 2,5 cm<br>Izquierdo/Derecho: 3 cm</p>
+                    </div>
+                    <div class="guia-item">
+                        <strong>📊 Tablas</strong>
+                        <p>Borde 1pt gris oscuro<br>Encabezado sombreado gris claro<br>Texto 10pt</p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; padding: 1rem; background: #fff3cd; border-radius: 0.8rem;">
+                    <strong>⚠️ Cualquier desviación en estos puntos supondrá la revisión obligatoria del documento.</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- TAREA 2: Reunión de Brief -->
+        <div class="card">
+            <h2>🤝 Tarea 2 · Reunión con el cliente</h2>
+            <div class="tarea-box" style="background: #e0f2fe; border-left-color: #0284c7;">
+                <h4>🎤 Sesión de entrevista con los compañeros de InnovacreaWork</h4>
+                <p style="margin-bottom: 1rem;">Una vez tengas la estructura preparada, concertaremos la reunión con los chicos que van a realizar el trabajo de InnovacreaWork. Durante la reunión:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;">
+                    <li>Escucha activa: entiende su idea y el problema que quieren resolver.</li>
+                    <li>Toma notas para completar <strong>todos</strong> los apartados de tu plantilla.</li>
+                    <li>Haz preguntas para identificar requisitos funcionales y técnicos.</li>
+                    <li>No te limites a frases cortas; desarrolla explicaciones que cualquier técnico pueda entender.</li>
+                </ul>
+                <p><strong>📌 Después de la reunión:</strong> traslada la información a tu documento, respetando la guía de estilo, y genera el PDF final para entregar.</p>
+            </div>
+        </div>
+
+        <!-- Plantilla con los apartados que debe contener -->
+        <div class="card">
+            <h2>📋 Plantilla de Briefing (apartados obligatorios)</h2>
+            <div class="plantilla">
+                <h3>Briefing del proyecto: InnovacreaWork</h3>
+
+                <div class="campo">
+                    <label>1. Información general del proyecto</label>
+                </div>
+                <div class="campo">
+                    <label>2. El problema (el "por qué")</label>
+                </div>
+                <div class="campo">
+                    <label>3. La solución (el "qué")</label>
+                </div>
+                <div class="campo">
+                    <label>4. El papel de la IA (el "cómo")</label>
+                </div>
+                <div class="campo">
+                    <label>5. Objetivos y restricciones</label>
+                </div>
+                <div class="campo">
+                    <label>6. Anexo: Análisis de viabilidad (equipo consultor)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recordatorio de entrega -->
+        <div class="card" style="background: #3b82f6; color: white;">
+            <h2 style="color: white; border-left-color: white;">📤 Entregable final de la fase</h2>
+            <ul style="margin-left: 1.5rem; line-height: 2; font-size: 1.1rem; color: white;">
+                <li>✅ Documento PDF con el briefing completo.</li>
+                <li>✅ Debe incluir <strong>todos los apartados</strong> de la plantilla.</li>
+                <li>✅ Debe cumplir <strong>estrictamente</strong> la guía de estilo.</li>
+                <li>✅ Nombre del archivo: <code>Apellido1_Apellido2_Nombre_Briefing_Innovacrea.pdf</code></li>
+                <li>✅ Subir a la plataforma antes del final de la sesión.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Entrega máxima: Sesión 1 completada. Recuerda: primero el documento vacío con el formato, luego la reunión, y finalmente el documento completo.</p>
+        </div>
+    </div>
+</body>
+</html>

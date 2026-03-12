@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fase 2 · Diario de creación | InnovaConsulting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #d97706; padding: 2rem 1rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header-bar {
+            background: white; border-radius: 2rem; padding: 1.5rem 2rem; margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .header-bar h1 { font-size: 2rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-volver { background: #e9ecef; color: #2d3748; padding: 0.5rem 1.5rem; border-radius: 2rem; text-decoration: none; font-weight: 600; }
+        .card { background: white; border-radius: 2rem; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .card h2 { font-size: 1.8rem; color: #2d3748; margin-bottom: 1.5rem; border-left: 8px solid #667eea; padding-left: 1rem; }
+        .diario-ejemplo { background: #f1f5f9; border-radius: 1.5rem; padding: 1.5rem; }
+        .entrada { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; }
+        .entrada .fecha { color: #667eea; font-weight: 700; margin-bottom: 0.5rem; }
+        .entrada .prompt { background: #0f172a; color: #bbf7d0; padding: 1rem; border-radius: 0.8rem; font-family: monospace; margin: 1rem 0; }
+        .tip { background: #dbeafe; padding: 1rem; border-radius: 1rem; margin-top: 1rem; }
+        .btn-prototipo { background: #10b981; color: white; padding: 0.8rem 2rem; border-radius: 2rem; text-decoration: none; display: inline-block; font-weight: 600; }
+        .footer { text-align: center; margin-top: 2rem; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <h1>🤖 Fase 2 · Diario de creación</h1>
+            <a href="index.html" class="btn-volver">← Volver al inicio</a>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Objetivo de la fase</h2>
+            <p style="font-size: 1.2rem; color: #334155;">Construir un prototipo funcional utilizando Google Studio IA (u otras herramientas) y documentar todo el proceso en un diario.</p>
+        </div>
+
+        <div class="card">
+            <h2>📓 Estructura del Diario de creación</h2>
+            <div class="diario-ejemplo">
+                <div class="entrada">
+                    <div class="fecha">🔹 Iteración 1 · Prompt inicial</div>
+                    <div class="prompt">"Crea una herramienta que recomiende libros de texto para profesores..."</div>
+                    <p><strong>Resultado:</strong> La IA devolvió una lista genérica, no personalizada. No sirve.</p>
+                    <p><strong>Aprendizaje:</strong> Hay que ser más específico con el perfil del usuario.</p>
+                </div>
+                <div class="entrada">
+                    <div class="fecha">🔹 Iteración 2 · Prompt mejorado</div>
+                    <div class="prompt">"Actúa como un experto en educación. Genera 5 recomendaciones de libros para un profesor de matemáticas de secundaria que quiere innovar con IA. Incluye autor y año."</div>
+                    <p><strong>Resultado:</strong> Mucho más ajustado. El cliente valida la propuesta.</p>
+                    <p><strong>Captura del prototipo:</strong> [Incluir enlace o imagen]</p>
+                </div>
+                <div class="tip">
+                    💡 <strong>Consejo:</strong> Documenta cada prompt, el resultado y qué aprendiste. Al final, incluye el enlace al prototipo funcional.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📤 Entregable</h2>
+            <ul style="margin-left: 1.5rem; line-height: 2; font-size: 1.1rem;">
+                <li>✅ Enlace al prototipo (puede ser un archivo compartido, una web, un documento interactivo...).</li>
+                <li>✅ Diario de creación (documento con todas las iteraciones, prompts y reflexiones).</li>
+                <li>✅ Incluir una breve valoración: ¿el prototipo cumple con lo acordado en el briefing?</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Entrega máxima: Sesión 2 completada.</p>
+        </div>
+    </div>
+</body>
+</html>
