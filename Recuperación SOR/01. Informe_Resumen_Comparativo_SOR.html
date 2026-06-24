@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Comparativo y Resumen de Evaluación - SOR</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #cbd5e1;
+            --success: #15803d;
+            --success-bg: #dcfce7;
+            --danger: #b91c1c;
+            --danger-bg: #fee2e2;
+            --warning: #a16207;
+            --warning-bg: #fef9c3;
+            --terminal-bg: #1e293b;
+            --terminal-text: #38bdf8;
+            --teacher-bg: #f1f5f9;
+            --teacher-border: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            color: var(--primary);
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            background: var(--primary-light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-info div span {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .section-title {
+            color: var(--primary);
+            margin: 2.5rem 0 1.2rem 0;
+            font-size: 1.5rem;
+            border-left: 5px solid var(--primary);
+            padding-left: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Dashboard and Tables */
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .dashboard-table th {
+            background-color: var(--primary);
+            color: white;
+            text-align: left;
+            padding: 14px 16px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+        }
+
+        .dashboard-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .dashboard-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .dashboard-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .global-row {
+            background-color: var(--primary-light) !important;
+            font-weight: bold;
+            border-top: 2px solid var(--primary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-approved {
+            background-color: var(--success-bg);
+            color: var(--success);
+        }
+
+        .badge-suspended {
+            background-color: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        /* Cards and Callouts */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .card ul {
+            padding-left: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Accordion Styles */
+        details {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: box-shadow 0.2s ease;
+        }
+
+        details[open] {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        summary {
+            list-style: none;
+            padding: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            border-bottom: 1px solid transparent;
+        }
+
+        details[open] summary {
+            background-color: var(--primary-light);
+            border-bottom: 1px solid var(--border);
+        }
+
+        summary:hover {
+            background-color: #f1f5f9;
+        }
+
+        summary::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: var(--primary);
+            transition: transform 0.2s ease;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 1.5rem;
+            background-color: #fff;
+        }
+
+        /* Comparative Matrix Blocks */
+        .comp-block {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .comp-block:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .comp-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 992px) {
+            .matrix-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .student-column {
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        .col-javier { background-color: #f0fdf4; border-top: 4px solid var(--success); }
+        .col-juan { background-color: #fff5f5; border-top: 4px solid var(--danger); }
+        .col-mario { background-color: #fffcf2; border-top: 4px solid var(--warning); }
+
+        .col-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .col-javier .col-name { color: var(--success); }
+        .col-juan .col-name { color: var(--danger); }
+        .col-mario .col-name { color: var(--warning); }
+
+        .solution-box {
+            background-color: var(--teacher-bg);
+            border: 1px solid var(--teacher-border);
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 0.75rem;
+        }
+        
+        .solution-box h5 {
+            color: #475569;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        /* Code/Terminal styles */
+        pre {
+            background-color: var(--terminal-bg);
+            color: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            font-family: 'Fira Code', Consolas, Monaco, monospace;
+            margin-top: 0.4rem;
+        }
+
+        code {
+            font-family: 'Fira Code', Consolas, Monaco, monospace;
+            background-color: #f1f5f9;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* Print Media Optimization */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+                color: #000;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .dashboard-table th {
+                background-color: #1e3a8a !important;
+                color: #fff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            details {
+                border: 1px solid #000 !important;
+                page-break-inside: avoid;
+                margin-bottom: 1.5rem;
+            }
+
+            summary {
+                background-color: #eff6ff !important;
+                color: #1e3a8a !important;
+                border-bottom: 1px solid #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 class="header-title">Informe Global Comparativo de Evaluación</h1>
+        <p style="color: var(--text-muted); font-weight: 500;">Módulo Profesional: Sistemas Operativos en Red (SOR) — Convocatoria Extraordinaria de Recuperación</p>
+        <div class="meta-info">
+            <div><span>Profesor Evaluador:</span> IES Vía de la Plata (Guijuelo)</div>
+            <div><span>Fecha del Informe:</span> 24 de Junio de 2026</div>
+            <div><span>Muestra Analizada:</span> 3 Alumnos (Javier, Juan Pedro, Mario)</div>
+        </div>
+    </header>
+
+    <section class="dashboard-section">
+        <h2 class="section-title">📊 Matriz Comparativa de Calificaciones</h2>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Resultado de Aprendizaje (RA)</th>
+                    <th style="width: 20%; text-align: center;">Javier Santos Q.</th>
+                    <th style="width: 20%; text-align: center;">Juan Pedro M.</th>
+                    <th style="width: 20%; text-align: center;">Mario Sánchez M.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>RA 1:</strong> Implantación e Instalación Inicial del SO</td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.0 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.0 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">1.5 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 2:</strong> Gestión de Servicios de Directorio LDAP</td>
+                    <td style="text-align: center; font-weight: bold; color: var(--success);">5.5 / 10 <br><span class="badge badge-approved">APRO</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.5 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--success);">6.5 / 10 <br><span class="badge badge-approved">APRO</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 3:</strong> Controladores de Dominio Samba AD DC</td>
+                    <td style="text-align: center; font-weight: bold; color: var(--success);">6.0 / 10 <br><span class="badge badge-approved">APRO</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.1 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">2.5 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 4:</strong> Recursos Compartidos y Seguridad Local</td>
+                    <td style="text-align: center; font-weight: bold; color: var(--success);">6.5 / 10 <br><span class="badge badge-approved">APRO</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.5 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.5 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 5:</strong> Monitorización y Automatización (Cron)</td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.0 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.0 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                    <td style="text-align: center; font-weight: bold; color: var(--danger);">0.0 / 10 <br><span class="badge badge-suspended">SUSP</span></td>
+                </tr>
+                <tr class="global-row">
+                    <td>NOTA FINAL GLOBAL OBTENIDA</td>
+                    <td style="text-align: center; font-size: 1.1rem; color: var(--danger);">3.6 / 10</td>
+                    <td style="text-align: center; font-size: 1.1rem; color: var(--danger);">0.2 / 10</td>
+                    <td style="text-align: center; font-size: 1.1rem; color: var(--danger);">2.2 / 10</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="dashboard-section">
+        <h2 class="section-title">🔍 Diagnóstico Pedagógico y Errores Críticos Comunes</h2>
+        <div class="summary-grid">
+            <div class="card" style="border-left: 4px solid var(--danger);">
+                <h4>Bloque Completamente En Blanco / No Presentado</h4>
+                <ul>
+                    <li><strong>RA 1 (Instalación) y RA 5 (Monitorización/Cron):</strong> Javier Santos y Juan Pedro dejaron estas secciones íntegramente en blanco. Mario Sánchez intentó el RA 1 de forma deficiente y erró el RA 5 de forma severa.</li>
+                    <li><strong>Impacto:</strong> Una falta total de competencias prácticas en automatización de copias/scripts y diagnosis básica del sistema.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--warning);">
+                <h4>Errores Conceptuales Muy Graves</h4>
+                <ul>
+                    <li><strong>Sintaxis de Cortafuegos (UFW):</strong> Uso erróneo de la directiva inexistente <code>ARGS</code> y concatenación de puertos incorrecta por parte de Mario.</li>
+                    <li><strong>Concepto de Load Average:</strong> Definido erróneamente como la media de tiempo de núcleos desde el primer arranque, denotando falta de comprensión del scheduler de Linux.</li>
+                    <li><strong>Permisos vs Derechos:</strong> Confusión severa entre los permisos físicos aplicados a objetos (ACLs) y los derechos del sistema aplicados a identidades.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--success);">
+                <h4>Puntos Fuertes y Competencias Adquiridas</h4>
+                <ul>
+                    <li><strong>Estructura LDAP (RA 2):</strong> Tanto Mario (6.5) como Javier (5.5) demuestran un manejo decente del diseño conceptual de identidades en red y sintaxis LDIF.</li>
+                    <li><strong>Estrategia de Dominio Samba AD DC (RA 3):</strong> Javier Santos destaca con una comprensión madura del aprovisionamiento de OUs y usuarios mediante la herramienta nativa CLI.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="accordions-section">
+        <h2 class="section-title">📂 Desglose Técnico Comparativo por Bloques</h2>
+
+        <details>
+            <summary>Bloque RA 1: Selección, Configuración e Implantación de Arquitecturas de Red</summary>
+            <div class="accordion-content">
+                <div class="comp-block">
+                    <div class="comp-title">1.1 Esquemas de Particionado Avanzado y Robustez de /etc/fstab</div>
+                    <div class="matrix-grid">
+                        <div class="student-column col-javier">
+                            <span class="col-name">Javier Santos Q.</span>
+                            <p class="empty-response">Sección dejada en blanco. Sin respuesta técnica registrada.</p>
+                        </div>
+                        <div class="student-column col-juan">
+                            <span class="col-name">Juan Pedro M.</span>
+                            <p class="empty-response">Sección dejada en blanco. Sin respuesta técnica registrada.</p>
+                        </div>
+                        <div class="student-column col-mario">
+                            <span class="col-name">Mario Sánchez M.</span>
+                            <p>Propuso un esquema plano rudimentario:</p>
+                            <ul>
+                                <li><code>/</code> (20GB) - ext4</li>
+                                <li><code>/home</code> (18GB) - ext4</li>
+                            </ul>
+                            <p style="color:var(--danger); margin-top:0.5rem; font-size:0.8rem;">⚠️ Error: Omitió la partición SWAP obligatoria para un servidor con 4GB de RAM y usó nombres lógicos mutables (/dev/sdb1).</p>
+                        </div>
+                    </div>
+                    <div class="solution-box">
+                        <h5>Solución de Referencia del Profesor</h5>
+                        <p>Particionado estructurado: <strong>SWAP</strong> (8GB), <strong>/ (Raíz)</strong> (9.6GB, ext4), <strong>/home</strong> (22.4GB, ext4 para aislar datos corporativos). Uso imperativo de identificadores estáticos <code>UUID</code> inmutables para evitar fallos de montaje al reordenar hardware del kernel.</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>Bloque RA 2 & RA 3: Gestión de Directorios Activos y Servicios Heterogéneos (LDAP / Samba AD DC)</summary>
+            <div class="accordion-content">
+                <div class="comp-block">
+                    <div class="comp-title">2.1 Auditoría, Cifrado y Depuración de Ficheros de Intercambio LDIF</div>
+                    <div class="matrix-grid">
+                        <div class="student-column col-javier">
+                            <span class="col-name">Javier Santos Q.</span>
+                            <p>Detectó errores de sintaxis esenciales. Sin embargo, introdujo un error crítico al intentar la inyección manual asignando una cadena de texto al atributo puramente numérico <code>gidNumber</code>.</p>
+                        </div>
+                        <div class="student-column col-juan">
+                            <span class="col-name">Juan Pedro M.</span>
+                            <p class="empty-response">Omitió la respuesta técnica. Desconocimiento completo del formato de árbol jerárquico LDIF.</p>
+                        </div>
+                        <div class="student-column col-mario">
+                            <span class="col-name">Mario Sánchez M.</span>
+                            <p>Corrigió la sintaxis estructural básica y las tabulaciones, pero falló en el entorno de producción al persistir las contraseñas en claro dentro del fichero, vulnerando la política de seguridad.</p>
+                        </div>
+                    </div>
+                    <div class="solution-box">
+                        <h5>Solución de Referencia del Profesor</h5>
+                        <p>Separación obligatoria mediante línea en blanco entre bloques DN, inclusión mandatoria de la clase de objeto <code>posixAccount</code> para habilitar directivas POSIX de sistema, y cifrado obligatorio de credenciales mediante el uso inyectado del algoritmo seguro <code>{SSHA}</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>Bloque RA 5: Automatización, Demonio Cron y Scripting de Mantenimiento Robustecido</summary>
+            <div class="accordion-content">
+                <div class="comp-block">
+                    <div class="comp-title">5.1 Automatización Periódica del Script de Muestreo de Conectividad LAN</div>
+                    <div class="matrix-grid">
+                        <div class="student-column col-javier">
+                            <span class="col-name">Javier Santos Q.</span>
+                            <p class="empty-response">En blanco en la hoja principal, aunque conoce la lógica estructural de un condicional simple.</p>
+                        </div>
+                        <div class="student-column col-juan">
+                            <span class="col-name">Juan Pedro M.</span>
+                            <p class="empty-response">Sección en blanco. Nivel de competencia nulo en este indicador crítico del módulo profesional.</p>
+                        </div>
+                        <div class="student-column col-mario">
+                            <span class="col-name">Mario Sánchez M.</span>
+                            <p>Intentó una programación crontab errónea y saturante:</p>
+                            <pre>* * * * * /home/alumno/monitor_srv.sh</pre>
+                            <p style="color:var(--danger); font-size:0.8rem; margin-top:0.3rem;">⚠️ Error crítico: Ejecución cada minuto continuo. Provoca una saturación innecesaria en bucle del subsistema I/O y red.</p>
+                        </div>
+                    </div>
+                    <div class="solution-box">
+                        <h5>Solución de Referencia del Profesor</h5>
+                        <p>Programación limpia mediante el operador de intervalo en el demonio Cron:</p>
+                        <pre>*/10 * * * * /home/alumno/monitor_srv.sh</pre>
+                        <p>Asegura un muestreo balanceado de telemetría cada 10 minutos sin comprometer el rendimiento general del servidor en explotación.</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </section>
+</div>
+
+<script>
+    // Evento disparado automáticamente antes del renderizado o guardado de impresión/PDF del navegador
+    window.addEventListener('beforeprint', () => {
+        const allDetails = document.querySelectorAll('details');
+        allDetails.forEach(details => {
+            details.dataset.wasOpen = details.open;
+            details.open = true; // Forzar la apertura completa para el PDF final
+        });
+    });
+
+    window.addEventListener('afterprint', () => {
+        const allDetails = document.querySelectorAll('details');
+        allDetails.forEach(details => {
+            if (details.dataset.wasOpen === 'false') {
+                details.open = false; // Restaurar estado interactivo previo
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

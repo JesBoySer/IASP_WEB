@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Evaluación - Sistemas Operativos en Red</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #cbd5e1;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --danger-bg: #fee2e2;
+            --danger-text: #991b1b;
+            --warning-bg: #fef9c3;
+            --warning-text: #854d0e;
+            --terminal-bg: #1e293b;
+            --terminal-text: #38bdf8;
+            --solution-bg: #f1f5f9;
+            --solution-border: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            margin-bottom: 2rem;
+            border-left: 8px solid var(--primary);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-item span {
+            font-weight: bold;
+            color: var(--text-muted);
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .dashboard-table th, .dashboard-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dashboard-table th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .dashboard-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .status-approved {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        .status-failed {
+            background-color: var(--danger-bg);
+            color: var(--danger-text);
+        }
+
+        .global-score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 1.5rem;
+        }
+
+        /* Accordion Styles */
+        details {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
+            transition: box-shadow 0.2s ease;
+        }
+
+        details[open] {
+            box-shadow: 0 4px 10px rgb(0 0 0 / 0.08);
+        }
+
+        summary {
+            padding: 1.2rem 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            list-style: none;
+            position: relative;
+            background-color: #fff;
+            transition: background-color 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary:hover {
+            background-color: var(--primary-light);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: "➔";
+            display: inline-block;
+            transform: rotate(90deg);
+            transition: transform 0.2s ease;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        details[open] summary::after {
+            transform: rotate(-90deg);
+        }
+
+        .accordion-content {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            background-color: #ffffff;
+        }
+
+        /* Question Blocks */
+        .sub-question {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+        }
+
+        .sub-question h4 {
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media(min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .panel {
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .panel-student {
+            background-color: #fafafa;
+            border-left: 4px solid var(--solution-border);
+        }
+
+        .panel-student.empty {
+            background-color: var(--danger-bg);
+            border-left: 4px solid var(--danger-text);
+            color: var(--danger-text);
+            font-style: italic;
+        }
+
+        .panel-solution {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+        }
+
+        .panel-title {
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .panel-student .panel-title { color: var(--text-muted); }
+        .panel-solution .panel-title { color: #15803d; }
+
+        /* Code and Terminal formatting */
+        pre {
+            background-color: var(--terminal-bg);
+            color: #f8fafc;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-top: 0.5rem;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        .terminal-cmd {
+            color: #34d399;
+        }
+
+        /* Print optimization */
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            header, .dashboard-container, details {
+                box-shadow: none !important;
+                border: 1px solid #000 !important;
+                page-break-inside: avoid;
+            }
+
+            summary {
+                background-color: #e2e8f0 !important;
+                color: #000 !important;
+                border-bottom: 1px solid #000;
+            }
+
+            summary::after {
+                display: none;
+            }
+
+            .panel-solution {
+                background-color: #f8fafc !important;
+                border-left: 4px solid #000 !important;
+            }
+
+            .status-badge {
+                border: 1px solid #000;
+                background-color: transparent !important;
+                color: #000 !important;
+            }
+
+            pre {
+                background-color: #fff !important;
+                color: #000 !important;
+                border: 1px solid #cbd5e1;
+            }
+            
+            .terminal-cmd {
+                color: #000 !important;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Informe de Evaluación Académica</h1>
+        <div class="meta-grid">
+            <div class="meta-item"><span>Alumno</span>Javier Santos Quirico</div>
+            <div class="meta-item"><span>Fecha Examen</span>24/06/2026</div>
+            <div class="meta-item"><span>Módulo Profesional</span>Sistemas Operativos en Red (SOR)</div>
+            <div class="meta-item"><span>Centro Educativo</span>IES Vía de la Plata</div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-title">
+            📊 Cuadro de Mando de Calificaciones
+        </div>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Resultado de Aprendizaje (RA)</th>
+                    <th style="width: 150px; text-align: center;">Nota Conceptual</th>
+                    <th style="width: 150px; text-align: center;">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>RA 1:</strong> Selección, instalación y configuración del sistema operativo en red básico</td>
+                    <td style="text-align: center; font-weight: bold;">0.0 / 10</td>
+                    <td style="text-align: center;"><span class="status-badge status-failed">SUSPENDIDO</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 2:</strong> Gestión de servicios de directorio de código abierto (LDAP)</td>
+                    <td style="text-align: center; font-weight: bold;">5.5 / 10</td>
+                    <td style="text-align: center;"><span class="status-badge status-approved">APROBADO</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 3:</strong> Configuración de controladores de dominio basados en Samba AD DC</td>
+                    <td style="text-align: center; font-weight: bold;">6.0 / 10</td>
+                    <td style="text-align: center;"><span class="status-badge status-approved">APROBADO</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 4:</strong> Gestión de recursos compartidos en red y seguridad perimetral local</td>
+                    <td style="text-align: center; font-weight: bold;">6.5 / 10</td>
+                    <td style="text-align: center;"><span class="status-badge status-approved">APROBADO</span></td>
+                </tr>
+                <tr>
+                    <td><strong>RA 5:</strong> Monitorización, optimización y automatización de tareas de mantenimiento</td>
+                    <td style="text-align: center; font-weight: bold;">0.0 / 10</td>
+                    <td style="text-align: center;"><span class="status-badge status-failed">SUSPENDIDO</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="global-score">
+            Nota Final Global Calculada: 3.6 / 10 (Requiere recuperación de bloques prácticos no presentados)
+        </div>
+    </div>
+
+    <details>
+        <summary>RA 1: Selección, instalación y configuración del sistema operativo en red básico (Nota: 0.0 / 10)</summary>
+        <div class="accordion-content">
+            
+            <div class="sub-question">
+                <h4>1.1 Elección de Sistemas Operativos según Escenarios</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        El alumno dejó estos apartados completamente vacíos.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <strong>Escenario 1:</strong> Windows Server 2022 Standard.<br>
+                        <em>Justificación:</em> Adecuado para entornos pequeños sin virtualización intensiva. Incluye Active Directory Domain Services y servidor de archivos nativo.<br><br>
+                        <strong>Escenario 2:</strong> Windows Server 2022 Datacenter.<br>
+                        <em>Justificación:</em> Única edición que permite máquinas virtuales Hyper-V ilimitadas, Storage Spaces Direct y réplica entre nodos para alta disponibilidad.<br><br>
+                        <strong>Escenario 3:</strong> Windows Server 2022 Standard/Datacenter con Azure Arc / Microsoft Entra ID.<br>
+                        <em>Justificación:</em> Permite integración nativa con Microsoft 365 y gestión de identidades centralizada en la nube.<br><br>
+                        <strong>Escenario 4:</strong> Ubuntu Server 22.04 LTS.<br>
+                        <em>Justificación:</em> Código abierto, sin costes de licencia, soporte de 5 años. Ideal para desplegar de forma nativa servicios como Samba AD DC, ISC DHCP y BIND9.
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>1.2 Esquema de Particionado (Servidor con 4GB RAM y 40GB Disco)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        Sin respuesta.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>Partición 1 (SWAP):</strong> Tamaño: 8 GB (RAM x 2). FS: swap. Montaje: [swap]. Actúa como memoria virtual.</li>
+                            <li><strong>Partición 2 (Raíz /):</strong> Tamaño: 9,6 GB (30% del resto). FS: ext4. Montaje: <code>/</code>. Aloja el sistema operativo.</li>
+                            <li><strong>Partición 3 (Datos /home):</strong> Tamaño: 22,4 GB (70% del resto). FS: ext4. Montaje: <code>/home</code>. Protege los datos de usuarios ante llenados de disco.</li>
+                        </ul>
+                        <strong>Riesgo de usar /dev/sdb1 frente a UUID:</strong> Los nombres de dispositivo se asignan dinámicamente por el kernel. Al añadir hardware nuevo, el orden puede cambiar y el sistema fallaría al arrancar o corrompería datos. El UUID es inmutable.<br>
+                        <strong>Línea fstab corregida:</strong>
+                        <pre>UUID=a1b2c3d4-1234-5678-abcd-ef0123456789 /datos ext4 defaults 0 2</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>1.3 Configuración de Red Estática (Netplan)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        Sin respuesta.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <pre>network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 192.168.100.10/24
+      routes:
+        - to: default
+          via: 192.168.100.1
+      nameservers:
+        addresses:
+          - 192.168.100.10
+          - 8.8.8.8</pre>
+                        <strong>Comandos de aplicación:</strong>
+                        <pre><span class="terminal-cmd">sudo netplan try</span>
+<span class="terminal-cmd">sudo netplan apply</span></pre>
+                        <strong>Justificación DNS Primario:</strong> Es obligatorio que apunte a sí mismo porque Samba AD DC autogestiona registros internos SRV de Kerberos y LDAP indispensables para el dominio.
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>1.4 Seguridad Perimetral Local (UFW Firewall)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        Sin respuesta.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <strong>Secuencia de comandos requerida:</strong>
+                        <pre><span class="terminal-cmd">sudo ufw status verbose</span>
+<span class="terminal-cmd">sudo ufw allow 22/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 135/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 139/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 445/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 389/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 636/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 3268/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 3269/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 88/tcp</span>
+<span class="terminal-cmd">sudo ufw allow 88/udp</span>
+<span class="terminal-cmd">sudo ufw enable</span></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </details>
+
+    <details>
+        <summary>RA 2: Gestión de servicios de directorio de código abierto (LDAP) (Nota: 5.5 / 10)</summary>
+        <div class="accordion-content">
+            
+            <div class="sub-question">
+                <h4>2.1 Conceptos Fundamentales de Identidades</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        <ul>
+                            <li><strong>Usuario:</strong> Persona con una cuenta identificada por su nombre que realiza operaciones según permisos asignados.</li>
+                            <li><strong>Grupo:</strong> Donde se agrupan los usuarios, organizados en su carpeta y con sus permisos.</li>
+                            <li><strong>UID / GID:</strong> Número utilizado para identificar a los usuarios (en ambos casos).</li>
+                            <li><strong>Ventajas:</strong> Permite dar permisos de manera rápida y automatizada en bloque, y facilita la búsqueda de usuarios por organización de carpetas.</li>
+                        </ul>
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>Usuario:</strong> Entidad que representa a una persona o proceso. Posee un login único y UID.</li>
+                            <li><strong>Grupo:</strong> Conjunto lógico de usuarios para asignación colectiva de accesos. Posee un GID único.</li>
+                            <li><strong>UID:</strong> User Identifier numérico utilizado internamente por el kernel de Linux. (Root = 0).</li>
+                            <li><strong>GID:</strong> Group Identifier numérico que determina los accesos grupales del kernel.</li>
+                            <li><strong>Ventajas:</strong> Centralización, mantenimiento reducido al mover usuarios de grupo sin tocar recursos, consistencia y menor probabilidad de errores.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>2.2 Auditoría y Corrección de Fichero LDIF</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        <ul>
+                            <li><strong>Error 1:</strong> El usuario está identificado con "uid" en el DN y debería ser con "cn".</li>
+                            <li><strong>Error 2:</strong> Falta la línea para declarar posixAccount, por lo que no se identifica el tipo.</li>
+                            <li><strong>Error 3:</strong> Falta la línea del homeDirectory.</li>
+                            <li><strong>Error 4:</strong> Falta la línea del apellido (sn) y se añade un usuario 'amartin' que no está creado.</li>
+                            <li><strong>Error 5:</strong> En el cn pone 'veterinario' (singular) y en la ruta pone 'veterinarios' (plural).</li>
+                        </ul>
+                        <strong>Fichero corregido propuesto por alumno:</strong>
+                        <pre>dn: cn=rlopez,ou=empleados,dc=salapet,dc=es
+objectClass: inetOrgPerson
+cn: rlopez
+sn: lopez
+uid: rlopez
+uidNumber: 3001
+gidNumber: 3001
+homeDirectory: /home/rlopez
+loginShell: /bin/bash
+userPassword: secreto123
+
+dn: cn=veterinarios,ou=grupos,dc=salapet,dc=es
+objectClass: posixGroup
+cn: veterinarios
+gidNumber: veterinarios
+memberUid: rlopez
+memberUid: amartin</pre>
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>Error 1 Real:</strong> Falta una línea en blanco obligatoria de separación entre los bloques de DN.</li>
+                            <li><strong>Error 2 Real:</strong> Los atributos de sistema (uidNumber, loginShell...) requieren añadir la <code>objectClass: posixAccount</code>.</li>
+                            <li><strong>Error 3 Real:</strong> Falta el atributo obligatorio <code>homeDirectory</code> para la cuenta de tipo POSIX.</li>
+                            <li><strong>Error 4 Real:</strong> La contraseña está en texto plano. Debe almacenarse con un hash cifrado (ej: <code>{SSHA}</code>).</li>
+                            <li><strong>Error 5 Real:</strong> El <code>gidNumber 3001</code> coincide en usuario y grupo, pero si la OU contenedora no existe fallará la inserción.</li>
+                        </ul>
+                        <strong>Fichero LDIF correcto estructurado:</strong>
+                        <pre>dn: uid=rlopez,ou=empleados,dc=salapet,dc=es
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Roberto López Martín
+sn: López Martín
+uid: rlopez
+uidNumber: 3001
+gidNumber: 3001
+homeDirectory: /home/rlopez
+loginShell: /bin/bash
+userPassword: {SSHA}HASH_GENERADO_AQUÍ
+
+dn: cn=veterinarios,ou=grupos,dc=salapet,dc=es
+objectClass: posixGroup
+cn: veterinarios
+gidNumber: 3001
+memberUid: rlopez</pre>
+                        <p style="color:var(--danger-text); font-size:0.85rem; margin-top:0.5rem;">⚠️ <em>Nota del evaluador: El alumno introdujo un error crítico en su corrección al asignar una cadena de texto ("veterinarios") al atributo numérico gidNumber.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>2.3 Estrategia de Anidamiento de Grupos (AGDLP)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        "El grupo global guarda los usuarios y el local de dominio guarda los grupos globales... Lo hicimos en clase metiendo dentro de finanzas_rwx al grupo gerente, de manera que al aplicar setfacl le das permisos a todos los usuarios a la vez."
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        Estructura: <strong>A</strong>ccounts → <strong>G</strong>lobal Groups (roles de función) → <strong>D</strong>omain <strong>L</strong>ocal Groups (permisos sobre el recurso) → <strong>P</strong>ermissions. Separar identidades de accesos dota al sistema de escalabilidad ilimitada, facilitando auditorías y minimizando errores catastróficos de privilegios.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </details>
+
+    <details>
+        <summary>RA 3: Configuración de controladores de dominio basados en Samba AD DC (Nota: 6.0 / 10)</summary>
+        <div class="accordion-content">
+            
+            <div class="sub-question">
+                <h4>3.1 Estructura del Árbol de Directorio Activo</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        <ul>
+                            <li><strong>CN:</strong> Common Name. Define el nombre del objeto o grupo.</li>
+                            <li><strong>OU:</strong> Unidades Organizativas que empaquetan grupos y usuarios.</li>
+                            <li><strong>DC:</strong> Domain Component para identificar el dominio.</li>
+                            <li><strong>Dominio deducido:</strong> salapet.local</li>
+                            <li><strong>Árbol dibujado:</strong>
+                                <pre>dc=salapet.es
+   |
+    ou=usuarios
+      |
+       ou=veterinarios
+         |
+           cn=laura prados</pre>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>CN / OU / DC:</strong> Conceptos correctos.</li>
+                            <li><strong>Dominio Exacto:</strong> salapet.local (basado en la cadena original).</li>
+                            <li><strong>Árbol canónico:</strong>
+                                <pre>DC=salapet,DC=local
+└── OU=Usuarios
+    └── OU=Veterinarios
+        └── CN=Laura Prados</pre>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>3.2 Automatización del Despliegue mediante Script</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        El alumno usó comandos con la sintaxis errónea <code>samba-tool ou add</code> (la correcta es <code>create</code>) y no configuró el anidamiento cruzado de grupos globales dentro de los locales de dominio como exigía la arquitectura AGDLP.
+                        <pre># Fragmento del script del alumno:
+sudo samba-tool ou add OU='usuarios'
+sudo samba-tool user add agarcia Empresa2025! --userou='OU=usuarios'
+sudo samba-tool group add G_Direccion --groupou='OU=grupos'
+sudo samba-tool group addmembers DL_Proyectos_rwx msanchez,clopez</pre>
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        Implementación impecable de provisión:
+                        <pre>#!/bin/bash
+samba-tool ou create "OU=Usuarios,DC=recuperacion,DC=local"
+samba-tool ou create "OU=GruposGlobales,DC=recuperacion,DC=local"
+samba-tool ou create "OU=GruposLocales,DC=recuperacion,DC=local"
+
+samba-tool group add G_Proyectos --groupou="OU=GruposGlobales..."
+samba-tool group add DL_Proyectos_RW --groupou="OU=GruposLocales..."
+
+samba-tool user create msanchez "Empresa2025!" --userou="OU=Usuarios..."
+
+samba-tool group addmembers G_Proyectos msanchez
+samba-tool group addmembers DL_Proyectos_RW G_Proyectos</pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </details>
+
+    <details>
+        <summary>RA 4: Gestión de recursos compartidos en red y seguridad perimetral local (Nota: 6.5 / 10)</summary>
+        <div class="accordion-content">
+            
+            <div class="sub-question">
+                <h4>4.1 Permisos, Derechos y Caso Práctico Cruzado</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        <ul>
+                            <li><strong>Permiso:</strong> Acciones que un usuario puede hacer sobre un archivo/carpeta.</li>
+                            <li><strong>Derecho:</strong> Partes del sistema a las que puede acceder el usuario.</li>
+                            <li><strong>Caso práctico:</strong> El usuario NO podrá entrar. Aunque tenga control total sobre los archivos, se bloquea antes en la primera puerta al no tener derecho de acceso desde la red.</li>
+                        </ul>
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>Permiso vs Derecho:</strong> El permiso aplica al objeto (ACL). El derecho aplica a la directiva global del sistema.</li>
+                            <li><strong>Resolución:</strong> Correcto. El derecho "Acceder a este equipo desde la red" se evalúa en el proceso de autenticación previo. Si falta, la conexión se rechaza inmediatamente sin llegar a leer los permisos NTFS.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>4.2 Permisos de Servidor de Archivos (ACLs y smb.conf)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        El alumno definió rutas relativas erróneas en sus comandos e intentó asignar permisos a grupos locales simples de Linux en lugar de las identidades del dominio Active Directory.
+                        <pre>sudo setfacl -R -m g:DL_Direccion_rwx:rwx /srv/samba/proyectos</pre>
+                        En <code>smb.conf</code> mapeó los recursos de la siguiente forma:
+                        <pre>[proyectos]
+path = /srv/samba/proyectos
+read only = no
+valid users = @DL_Proyectos_rwx, @DL_Proyectos_rx</pre>
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        Se deben aplicar ACLs extendidas relativas al dominio y configurar las herencias por defecto (<code>-d</code>):
+                        <pre>setfacl -m g:"RECUPERACION\DL_Proyectos_RW":rwx /srv/samba/proyectos
+setfacl -d -m g:"RECUPERACION\DL_Proyectos_RW":rwx /srv/samba/proyectos</pre>
+                        Configuración en <code>smb.conf</code>:
+                        <pre>[proyectos]
+path = /srv/samba/proyectos
+read only = no
+browseable = yes
+valid users = @"RECUPERACION\Domain Users"
+create mask = 0660
+directory mask = 0770</pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </details>
+
+    <details>
+        <summary>RA 5: Monitorización, optimización y automatización de tareas de mantenimiento (Nota: 0.0 / 10)</summary>
+        <div class="accordion-content">
+            
+            <div class="sub-question">
+                <h4>5.1 Comandos de Diagnóstico en Tiempo Real e Interpretación</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        El alumno dejó toda esta sección en blanco.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>CPU:</strong> <code>htop</code> (Desglose interactivo por núcleos).</li>
+                            <li><strong>Red:</strong> <code>nethogs</code> (Tráfico agrupado por ID de proceso).</li>
+                            <li><strong>Disco:</strong> <code>iotop</code> (Lectura y escritura I/O de procesos en tiempo real).</li>
+                            <li><strong>Logs:</strong> <code>journalctl -b -p err</code> (Filtra errores críticos del boot actual).</li>
+                        </ul>
+                        <strong>Análisis crítico de RAM/Swap suministrado:</strong> Hay una saturación masiva. Solo quedan 60MB de memoria real disponible (columna *available*). El uso del 92% de la Swap demuestra que el servidor sufre de *swapping* continuo, destruyendo el rendimiento de E/S de disco.<br>
+                        <strong>Interpretación Load Average (5.81 / 4.72 / 3.15) en 2 Núcleos:</strong> Indica sobrecarga extrema. Al tener 2 núcleos, un valor de 2.0 denotaría el 100% de capacidad de cómputo. Un índice de 5.81 significa que hay casi el triple de procesos en cola esperando CPU de los que la máquina puede computar en tiempo real.
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>5.2 Explotación del Visor de Sucesos del Sistema (Systemd Journalctl)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        Sin respuesta.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>A) Errores de Kernel:</strong> <code>journalctl -b -k -p err</code></li>
+                            <li><strong>B) SSH en tiempo real:</strong> <code>journalctl -u ssh -f</code></li>
+                            <li><strong>C) Cron de ayer:</strong> <code>journalctl -u cron --since yesterday --until today</code></li>
+                            <li><strong>D) Listar arranques:</strong> <code>journalctl --list-boots</code></li>
+                            <li><strong>E) Arranque anterior:</strong> <code>journalctl -b -1</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>5.3 Gestión Avanzada de Paquetes (APT)</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        Sin respuesta.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <strong>Actualizar Índices:</strong> <code>sudo apt update</code><br>
+                        <strong>Instalar Paquetes:</strong> <code>sudo apt upgrade -y</code><br>
+                        <strong>Diferencia Crítica:</strong> <code>upgrade</code> actualiza versiones sin alterar la estructura de dependencias del sistema de archivos. Por el contrario, <code>full-upgrade</code> realiza resoluciones agresivas pudiendo añadir paquetes nuevos o desinstalar dependencias conflictivas antiguas de forma automática (esencial para parches de Kernel).
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-question">
+                <h4>5.4 Automatización de Tareas Cron y Shell Scripting</h4>
+                <div class="comparison-grid">
+                    <div class="panel panel-student empty">
+                        <span class="panel-title">Respuesta del Alumno</span>
+                        Sin respuesta.
+                    </div>
+                    <div class="panel panel-solution">
+                        <span class="panel-title">Solucionario Oficial</span>
+                        <ul>
+                            <li><strong>0 8 * * 1-5:</strong> Lunes a Viernes a las 08:00 h exactas.</li>
+                            <li><strong>*/15 10-18 * * 1,3,5:</strong> Cada 15 min de 10:00 a 18:00 los Lunes, Miércoles y Viernes.</li>
+                            <li><strong>0 0 1 1 *:</strong> Cada 1 de enero a las 00:00 medianoche (ejecución anual).</li>
+                        </ul>
+                        <strong>Script Robustecido monitor_srv.sh:</strong>
+                        <pre>#!/bin/bash
+SERVIDOR="192.168.100.10"
+LOG="/home/alumno/monitor.log"
+FECHA=$(date "+%Y-%m-%d %H:%M:%S")
+
+if ping -c 2 "$SERVIDOR" > /dev/null 2>&1; then
+    echo "[$FECHA] Servidor recuperacion.local: OPERATIVO." >> "$LOG"
+else
+    echo "[$FECHA] ALERTA: Servidor recuperacion.local CAÍDO." >> "$LOG"
+fi</pre>
+                        <strong>Línea del Crontab (Cada 10 minutos):</strong>
+                        <pre>*/10 * * * * /home/alumno/monitor_srv.sh</pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </details>
+
+</div>
+
+<script>
+    window.addEventListener('beforeprint', () => {
+        const allDetails = document.querySelectorAll('details');
+        allDetails.forEach(details => {
+            details.dataset.wasOpen = details.open;
+            details.open = true;
+        });
+    });
+
+    window.addEventListener('afterprint', () => {
+        const allDetails = document.querySelectorAll('details');
+        allDetails.forEach(details => {
+            if (details.dataset.wasOpen === 'false') {
+                details.open = false;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
