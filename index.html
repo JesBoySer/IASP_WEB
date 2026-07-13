@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desiderata de horario · IES Vía de la Plata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF9F4;
+    --paper-line:#D9E1E8;
+    --surface:#FFFFFF;
+    --border:#E3E0D4;
+    --ink:#1C2430;
+    --ink-soft:#5B6472;
+    --ink-faint:#9AA2AC;
+    --mark-x:#B23A2E;
+    --mark-x-bg:#F7E7E4;
+    --mark-zero:#2C5C8A;
+    --mark-zero-bg:#E6EDF4;
+    --success:#3F7A5C;
+    --success-bg:#E8F1EC;
+    --danger:#B23A2E;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(0deg, var(--paper-line) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, var(--paper-line) 0 1px, transparent 1px 28px),
+      var(--paper);
+    background-attachment:local;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding:40px 16px 80px;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    background:var(--surface);
+    border:1px solid var(--border);
+    box-shadow:0 1px 2px rgba(28,36,48,0.04), 0 12px 32px -16px rgba(28,36,48,0.18);
+  }
+  .letterhead{
+    padding:32px 40px 24px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:26px;
+    line-height:1.25;
+    margin:0;
+    color:var(--ink);
+  }
+  .course-tag{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    border:1px solid var(--ink);
+    padding:6px 12px;
+    white-space:nowrap;
+    color:var(--ink);
+  }
+  .intro{
+    padding:20px 40px 0;
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+  .section{
+    padding:28px 40px;
+    border-bottom:1px dashed var(--border);
+  }
+  .section:last-of-type{border-bottom:none;}
+  .section-label{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-label::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+  .field-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-bottom:14px;
+  }
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:12.5px;font-weight:600;color:var(--ink-soft);}
+  .field input, .field select{
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--paper);
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s;
+  }
+  .field input:focus, .field select:focus{border-color:var(--ink);}
+
+  /* Grid de preferencias */
+  .grid-help{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0 0 16px;}
+  .grid-help b{color:var(--ink);}
+  .pref-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;}
+  .pref-table{width:100%;min-width:280px;border-collapse:collapse;table-layout:fixed;}
+  .pref-table th{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    font-weight:400;
+    padding:6px 2px 10px;
+    text-align:center;
+  }
+  .pref-table th:first-child{text-align:left;}
+  .pref-table td{padding:3px;text-align:center;}
+  .hour-label{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:left !important;
+    padding-left:2px !important;
+    white-space:nowrap;
+  }
+  .mark-cell{
+    width:100%;
+    aspect-ratio:1/0.9;
+    min-height:38px;
+    box-sizing:border-box;
+    border:1.5px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--surface);
+    cursor:pointer;
+    font-family:'Space Mono',monospace;
+    font-size:clamp(13px,4vw,17px);
+    font-weight:700;
+    color:transparent;
+    transition:transform .1s ease, border-color .15s, background .15s;
+    position:relative;
+    padding:0;
+  }
+  .mark-cell:hover{border-color:var(--ink-faint);}
+  .mark-cell:active{transform:scale(0.92);}
+  .mark-cell.x{
+    color:var(--mark-x);
+    background:var(--mark-x-bg);
+    border-color:var(--mark-x);
+    transform:rotate(-3deg);
+  }
+  .mark-cell.zero{
+    color:var(--mark-zero);
+    background:var(--mark-zero-bg);
+    border-color:var(--mark-zero);
+    transform:rotate(2deg);
+  }
+  .counters{
+    display:flex;
+    gap:24px;
+    margin-top:18px;
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+  }
+  .counter{display:flex;align-items:center;gap:8px;}
+  .counter .dot{width:10px;height:10px;border-radius:2px;}
+  .counter.x .dot{background:var(--mark-x);}
+  .counter.zero .dot{background:var(--mark-zero);}
+  .counter .val{font-weight:700;}
+  .counter .val.ok{color:var(--success);}
+  .counter .val.bad{color:var(--danger);}
+
+  /* Tabla de materias */
+  .mat-row{
+    display:grid;
+    grid-template-columns:2.2fr 1fr 0.8fr auto;
+    gap:10px;
+    margin-bottom:10px;
+    align-items:center;
+  }
+  .mat-row input{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:9px 11px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--paper);
+    color:var(--ink);
+    outline:none;
+    width:100%;
+  }
+  .mat-row input:focus{border-color:var(--ink);}
+  .remove-row{
+    background:none;
+    border:none;
+    color:var(--ink-faint);
+    cursor:pointer;
+    font-size:18px;
+    line-height:1;
+    padding:4px 8px;
+  }
+  .remove-row:hover{color:var(--danger);}
+  .add-row{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    background:none;
+    border:1px dashed var(--ink-faint);
+    color:var(--ink-soft);
+    padding:9px 14px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .add-row:hover{border-color:var(--ink);color:var(--ink);}
+  .total-line{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:14px;
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .total-line b{color:var(--ink);margin-left:8px;font-size:15px;}
+
+  textarea{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--paper);
+    color:var(--ink);
+    outline:none;
+    resize:vertical;
+    min-height:70px;
+  }
+  textarea:focus{border-color:var(--ink);}
+
+  .footer{padding:24px 40px 32px;}
+  .validation-msg{
+    font-size:13px;
+    color:var(--danger);
+    margin-bottom:14px;
+    min-height:18px;
+  }
+  .submit-btn{
+    width:100%;
+    font-family:'Space Mono',monospace;
+    font-size:14px;
+    letter-spacing:0.04em;
+    padding:15px;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:background .15s, opacity .15s;
+  }
+  .submit-btn:hover:not(:disabled){background:#000;}
+  .submit-btn:disabled{background:var(--ink-faint);cursor:not-allowed;opacity:0.6;}
+
+  .confirm{
+    padding:60px 40px;
+    text-align:center;
+  }
+  .confirm .stamp{
+    display:inline-block;
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.1em;
+    color:var(--success);
+    border:2px solid var(--success);
+    padding:10px 18px;
+    border-radius:var(--radius);
+    transform:rotate(-2deg);
+    margin-bottom:18px;
+  }
+  .confirm h2{font-family:'Space Mono',monospace;font-size:20px;margin:0 0 10px;}
+  .confirm p{color:var(--ink-soft);font-size:14px;line-height:1.6;max-width:420px;margin:0 auto 24px;}
+  .link-btn{
+    background:none;border:none;
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+  }
+
+  .admin-toggle{
+    max-width:760px;margin:24px auto 0;
+    text-align:center;
+  }
+  .admin-toggle button{
+    background:none;border:none;
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    color:var(--ink-faint);
+    cursor:pointer;
+    text-transform:uppercase;
+  }
+  .admin-toggle button:hover{color:var(--ink-soft);}
+
+  .admin-panel{
+    max-width:760px;margin:16px auto 0;
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:24px 32px 32px;
+  }
+  .admin-head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:16px;flex-wrap:wrap;gap:10px;
+  }
+  .admin-head h3{font-family:'Space Mono',monospace;font-size:14px;margin:0;}
+  .admin-actions{display:flex;gap:10px;}
+  .mini-btn{
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    padding:8px 14px;
+    border:1px solid var(--ink);
+    background:var(--surface);
+    color:var(--ink);
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .mini-btn:hover{background:var(--ink);color:var(--paper);}
+  .admin-table-wrap{overflow-x:auto;}
+  table.admin-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.admin-table th{
+    font-family:'Space Mono',monospace;
+    text-align:left;font-weight:600;
+    padding:8px 10px;
+    border-bottom:2px solid var(--ink);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  table.admin-table td{
+    padding:8px 10px;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+  }
+  .empty-state{
+    text-align:center;color:var(--ink-faint);
+    font-size:13px;padding:30px 0;
+  }
+
+  @media (max-width:640px){
+    .letterhead{padding:24px 20px 18px;}
+    .intro,.section,.footer{padding-left:16px;padding-right:16px;}
+    .field-row{grid-template-columns:1fr;}
+    .mat-row{grid-template-columns:1fr;gap:6px;}
+    .remove-row{justify-self:end;}
+    h1{font-size:21px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .mark-cell, .submit-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet" id="formSheet">
+  <div class="letterhead">
+    <div>
+      <p class="eyebrow">IES Vía de la Plata · Guijuelo</p>
+      <h1>Desiderata de horario</h1>
+    </div>
+    <div class="course-tag">CURSO 2025–26</div>
+  </div>
+
+  <p class="intro">Indica tu disponibilidad horaria y las materias que impartirás. Esta información se recoge de forma centralizada para la elaboración de los horarios del centro.</p>
+
+  <div class="section">
+    <p class="section-label">Datos de contacto</p>
+    <div class="field-row">
+      <div class="field">
+        <label for="fNombre">Nombre y apellidos</label>
+        <input type="text" id="fNombre" placeholder="Nombre completo">
+      </div>
+      <div class="field">
+        <label for="fDepto">Departamento</label>
+        <input type="text" id="fDepto" placeholder="Ej. Informática">
+      </div>
+    </div>
+    <div class="field-row" style="grid-template-columns:1fr;">
+      <div class="field">
+        <label for="fTelefono">Teléfono de contacto</label>
+        <input type="tel" id="fTelefono" placeholder="600 000 000">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Preferencias en el horario</p>
+    <p class="grid-help">Marca con <b style="color:var(--mark-x)">X</b> hasta 3 horas de preferencia máxima de <b>no permanencia</b> en el centro, y con <b style="color:var(--mark-zero)">0</b> hasta 2 horas de conveniencia (pero no preferencia máxima). Pulsa una celda para ciclar: vacío → X → 0 → vacío.</p>
+    <div class="pref-table-wrap">
+      <table class="pref-table">
+        <colgroup>
+          <col style="width:30px;">
+          <col><col><col><col><col>
+        </colgroup>
+        <thead>
+          <tr><th></th><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th></tr>
+        </thead>
+        <tbody id="prefBody"></tbody>
+      </table>
+    </div>
+    <div class="counters">
+      <div class="counter x"><span class="dot"></span>X marcadas <span class="val" id="countX">0</span> / 3</div>
+      <div class="counter zero"><span class="dot"></span>Ceros marcados <span class="val" id="countZero">0</span> / 2</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Materias y horas</p>
+    <div id="matRows"></div>
+    <button class="add-row" id="addRowBtn" type="button">+ Añadir materia</button>
+    <div class="total-line">Total horas <b id="totalHoras">0</b></div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Observaciones y sugerencias</p>
+    <textarea id="fObs" placeholder="Aquellos profesores que necesiten reserva de aula, u otras observaciones..."></textarea>
+  </div>
+
+  <div class="footer">
+    <p class="validation-msg" id="validationMsg"></p>
+    <button class="submit-btn" id="submitBtn" disabled>Enviar desiderata</button>
+  </div>
+</div>
+
+<div class="confirm" id="confirmSheet" style="display:none;">
+  <div class="stamp">✓ Registrado</div>
+  <h2>Desiderata enviada</h2>
+  <p>Tus datos han quedado registrados correctamente. Jefatura de Estudios los tendrá en cuenta para la elaboración de los horarios.</p>
+  <button class="link-btn" id="anotherBtn">Enviar otra respuesta</button>
+</div>
+
+<div class="admin-toggle"><a id="sheetLink" href="#" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:0.08em;color:var(--ink-faint);text-transform:uppercase;text-decoration:none;">Ver todas las respuestas (hoja de cálculo) →</a></div>
+
+<script>
+/* ======= CONFIGURACIÓN =======
+   Pega aquí la URL de tu implementación de Google Apps Script
+   (ver instrucciones de configuración que te ha dado Claude).
+*/
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPQVAJ1dJMEW3WEoVb8y11b3253-uII7YEC286YpH1TXs5gxIZO9T_AKuEF1gXzD4wgg/exec';
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17-APNbZoMxMsM-urgABLdMqJgAujbIeqt-wwQ-22vh4/edit?gid=0#gid=0';
+/* ============================== */
+
+const DAYS = ['L','M','Mi','J','V'];
+const DAY_LABELS = ['L','M','X','J','V'];
+const HOURS = ['1ª','2ª','3ª','4ª','5ª','6ª'];
+
+let pref = HOURS.map(() => ({L:'',M:'',Mi:'',J:'',V:''}));
+let materias = [{materia:'',curso:'',horas:''}];
+
+const prefBody = document.getElementById('prefBody');
+const matRows = document.getElementById('matRows');
+const countXEl = document.getElementById('countX');
+const countZeroEl = document.getElementById('countZero');
+const totalHorasEl = document.getElementById('totalHoras');
+const submitBtn = document.getElementById('submitBtn');
+const validationMsg = document.getElementById('validationMsg');
+
+function cycleMark(v){
+  if(v === '') return 'X';
+  if(v === 'X') return '0';
+  return '';
+}
+
+function renderPref(){
+  prefBody.innerHTML = '';
+  HOURS.forEach((h, r) => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('td');
+    th.className = 'hour-label';
+    th.textContent = h;
+    tr.appendChild(th);
+    DAYS.forEach(d => {
+      const td = document.createElement('td');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const v = pref[r][d];
+      btn.className = 'mark-cell' + (v === 'X' ? ' x' : v === '0' ? ' zero' : '');
+      btn.textContent = v || '·';
+      btn.addEventListener('click', () => {
+        pref[r][d] = cycleMark(pref[r][d]);
+        renderPref();
+        validate();
+      });
+      td.appendChild(btn);
+      tr.appendChild(td);
+    });
+    prefBody.appendChild(tr);
+  });
+  let cx = 0, cz = 0;
+  pref.forEach(row => DAYS.forEach(d => {
+    if(row[d] === 'X') cx++;
+    if(row[d] === '0') cz++;
+  }));
+  countXEl.textContent = cx;
+  countZeroEl.textContent = cz;
+  countXEl.className = 'val ' + (cx === 3 ? 'ok' : cx > 3 ? 'bad' : '');
+  countZeroEl.className = 'val ' + (cz === 2 ? 'ok' : cz > 2 ? 'bad' : '');
+}
+
+function renderMaterias(){
+  matRows.innerHTML = '';
+  materias.forEach((m, i) => {
+    const row = document.createElement('div');
+    row.className = 'mat-row';
+    row.innerHTML = `
+      <input type="text" placeholder="Materia" value="${escapeAttr(m.materia)}" data-field="materia" data-idx="${i}">
+      <input type="text" placeholder="Curso" value="${escapeAttr(m.curso)}" data-field="curso" data-idx="${i}">
+      <input type="number" min="0" step="0.5" placeholder="Horas" value="${escapeAttr(m.horas)}" data-field="horas" data-idx="${i}">
+      <button type="button" class="remove-row" data-idx="${i}" title="Eliminar fila">×</button>
+    `;
+    matRows.appendChild(row);
+  });
+  matRows.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      const idx = +e.target.dataset.idx;
+      const field = e.target.dataset.field;
+      materias[idx][field] = e.target.value;
+      updateTotal();
+      validate();
+    });
+  });
+  matRows.querySelectorAll('.remove-row').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = +e.target.dataset.idx;
+      if(materias.length > 1){
+        materias.splice(idx, 1);
+        renderMaterias();
+        updateTotal();
+        validate();
+      }
+    });
+  });
+}
+
+function escapeAttr(v){
+  return String(v).replace(/"/g,'&quot;');
+}
+
+function updateTotal(){
+  const t = materias.reduce((s,m) => s + (parseFloat(m.horas) || 0), 0);
+  totalHorasEl.textContent = t;
+}
+
+document.getElementById('addRowBtn').addEventListener('click', () => {
+  materias.push({materia:'',curso:'',horas:''});
+  renderMaterias();
+});
+
+function validate(){
+  const nombre = document.getElementById('fNombre').value.trim();
+  let cx = 0, cz = 0;
+  pref.forEach(row => DAYS.forEach(d => {
+    if(row[d] === 'X') cx++;
+    if(row[d] === '0') cz++;
+  }));
+  const hasMateria = materias.some(m => m.materia.trim() !== '');
+
+  let msg = '';
+  if(!nombre) msg = 'Indica tu nombre y apellidos.';
+  else if(cx !== 3 || cz !== 2) msg = 'Debes marcar exactamente 3 X y 2 ceros en la cuadrícula de preferencias.';
+  else if(!hasMateria) msg = 'Añade al menos una materia.';
+
+  validationMsg.textContent = msg;
+  submitBtn.disabled = !!msg;
+  return !msg;
+}
+
+['fNombre','fDepto','fTelefono'].forEach(id => {
+  document.getElementById(id).addEventListener('input', validate);
+});
+
+function sanitizeKeyPart(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+}
+
+submitBtn.addEventListener('click', async () => {
+  if(!validate()) return;
+
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PEGA_AQUI') === 0){
+    alert('Este formulario todavía no está conectado a la hoja de cálculo. Falta configurar APPS_SCRIPT_URL en el código (ver instrucciones de configuración).');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando…';
+
+  const record = {
+    nombre: document.getElementById('fNombre').value.trim(),
+    departamento: document.getElementById('fDepto').value.trim(),
+    telefono: document.getElementById('fTelefono').value.trim(),
+    preferenciasTexto: summarizePref(pref),
+    preferenciasJSON: JSON.stringify(pref),
+    materiasTexto: materias.filter(m => m.materia.trim() !== '')
+      .map(m => `${m.materia}${m.curso ? ' ('+m.curso+')' : ''}: ${m.horas}h`).join(' | '),
+    materiasJSON: JSON.stringify(materias.filter(m => m.materia.trim() !== '')),
+    totalHoras: materias.reduce((s,m) => s + (parseFloat(m.horas) || 0), 0),
+    observaciones: document.getElementById('fObs').value.trim(),
+    fechaEnvio: new Date().toLocaleString('es-ES')
+  };
+
+  try{
+    // text/plain evita el preflight CORS; Apps Script igualmente lee JSON del body.
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(record)
+    });
+    // Con mode:'no-cors' no podemos leer la respuesta; asumimos éxito si fetch no lanza error.
+    document.getElementById('formSheet').style.display = 'none';
+    document.getElementById('confirmSheet').style.display = 'block';
+  }catch(err){
+    console.error(err);
+    alert('Error de conexión al guardar la respuesta. Comprueba tu conexión a internet e inténtalo de nuevo.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enviar desiderata';
+  }
+});
+
+document.getElementById('anotherBtn').addEventListener('click', () => {
+  pref = HOURS.map(() => ({L:'',M:'',Mi:'',J:'',V:''}));
+  materias = [{materia:'',curso:'',horas:''}];
+  document.getElementById('fNombre').value = '';
+  document.getElementById('fDepto').value = '';
+  document.getElementById('fTelefono').value = '';
+  document.getElementById('fObs').value = '';
+  renderPref();
+  renderMaterias();
+  updateTotal();
+  submitBtn.textContent = 'Enviar desiderata';
+  validate();
+  document.getElementById('confirmSheet').style.display = 'none';
+  document.getElementById('formSheet').style.display = 'block';
+});
+
+/* ---------- Enlace a la hoja de cálculo ---------- */
+const sheetLinkEl = document.getElementById('sheetLink');
+if(SHEET_URL && SHEET_URL.indexOf('PEGA_AQUI') !== 0){
+  sheetLinkEl.href = SHEET_URL;
+}else{
+  sheetLinkEl.style.display = 'none';
+}
+
+function summarizePref(pref){
+  if(!pref) return '';
+  const parts = [];
+  pref.forEach((row, i) => {
+    DAYS.forEach((d, di) => {
+      if(row[d] === 'X') parts.push(`${DAY_LABELS[di]}${HOURS[i]}:X`);
+      if(row[d] === '0') parts.push(`${DAY_LABELS[di]}${HOURS[i]}:0`);
+    });
+  });
+  return parts.join(', ');
+}
+
+function escapeHtml(v){
+  return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+renderPref();
+renderMaterias();
+updateTotal();
+validate();
+</script>
+
+</body>
+</html>
