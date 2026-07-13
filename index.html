@@ -124,14 +124,28 @@
     color:var(--ink);
     outline:none;
     transition:border-color .15s;
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
   }
   .field input:focus, .field select:focus{border-color:var(--ink);}
 
-  /* Grid de preferencias */
+  /* Grid de preferencias (se mantiene igual) */
   .grid-help{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0 0 16px;}
   .grid-help b{color:var(--ink);}
-  .pref-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;}
-  .pref-table{width:100%;min-width:280px;border-collapse:collapse;table-layout:fixed;}
+  .pref-table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    margin:0 -4px;
+    padding:4px 4px 8px;
+    border-radius:var(--radius);
+  }
+  .pref-table{
+    width:100%;
+    min-width:480px;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
   .pref-table th{
     font-family:'Space Mono',monospace;
     font-size:12px;
@@ -140,7 +154,7 @@
     padding:6px 2px 10px;
     text-align:center;
   }
-  .pref-table th:first-child{text-align:left;}
+  .pref-table th:first-child{text-align:left;width:40px;}
   .pref-table td{padding:3px;text-align:center;}
   .hour-label{
     font-family:'Space Mono',monospace;
@@ -166,6 +180,8 @@
     transition:transform .1s ease, border-color .15s, background .15s;
     position:relative;
     padding:0;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
   }
   .mark-cell:hover{border-color:var(--ink-faint);}
   .mark-cell:active{transform:scale(0.92);}
@@ -187,43 +203,53 @@
     margin-top:18px;
     font-family:'Space Mono',monospace;
     font-size:13px;
+    flex-wrap:wrap;
   }
   .counter{display:flex;align-items:center;gap:8px;}
-  .counter .dot{width:10px;height:10px;border-radius:2px;}
+  .counter .dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
   .counter.x .dot{background:var(--mark-x);}
   .counter.zero .dot{background:var(--mark-zero);}
   .counter .val{font-weight:700;}
   .counter .val.ok{color:var(--success);}
   .counter .val.bad{color:var(--danger);}
 
-  /* Tabla de materias */
+  /* ===== MATERIAS: apiladas siempre ===== */
   .mat-row{
-    display:grid;
-    grid-template-columns:2.2fr 1fr 0.8fr auto;
-    gap:10px;
-    margin-bottom:10px;
-    align-items:center;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    background:var(--paper);
+    padding:14px;
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    margin-bottom:12px;
   }
-  .mat-row input{
+  .mat-row input,
+  .mat-row select{
     font-family:'Inter',sans-serif;
     font-size:14px;
     padding:9px 11px;
     border:1px solid var(--border);
     border-radius:var(--radius);
-    background:var(--paper);
+    background:var(--surface);
     color:var(--ink);
     outline:none;
     width:100%;
+    -webkit-appearance:none;
+    appearance:none;
   }
-  .mat-row input:focus{border-color:var(--ink);}
+  .mat-row input:focus,
+  .mat-row select:focus{border-color:var(--ink);}
   .remove-row{
+    align-self:flex-end;
     background:none;
     border:none;
     color:var(--ink-faint);
     cursor:pointer;
-    font-size:18px;
+    font-size:20px;
     line-height:1;
     padding:4px 8px;
+    touch-action:manipulation;
   }
   .remove-row:hover{color:var(--danger);}
   .add-row{
@@ -236,6 +262,8 @@
     border-radius:var(--radius);
     cursor:pointer;
     margin-top:6px;
+    touch-action:manipulation;
+    width:100%;
   }
   .add-row:hover{border-color:var(--ink);color:var(--ink);}
   .total-line{
@@ -282,6 +310,7 @@
     border-radius:var(--radius);
     cursor:pointer;
     transition:background .15s, opacity .15s;
+    touch-action:manipulation;
   }
   .submit-btn:hover:not(:disabled){background:#000;}
   .submit-btn:disabled{background:var(--ink-faint);cursor:not-allowed;opacity:0.6;}
@@ -311,73 +340,60 @@
     color:var(--ink-soft);
     text-decoration:underline;
     cursor:pointer;
+    touch-action:manipulation;
   }
 
   .admin-toggle{
     max-width:760px;margin:24px auto 0;
     text-align:center;
   }
-  .admin-toggle button{
-    background:none;border:none;
+  .admin-toggle a{
     font-family:'Space Mono',monospace;
     font-size:11.5px;
     letter-spacing:0.08em;
     color:var(--ink-faint);
-    cursor:pointer;
     text-transform:uppercase;
+    text-decoration:none;
   }
-  .admin-toggle button:hover{color:var(--ink-soft);}
+  .admin-toggle a:hover{color:var(--ink-soft);}
 
-  .admin-panel{
-    max-width:760px;margin:16px auto 0;
-    background:var(--surface);
-    border:1px solid var(--border);
-    padding:24px 32px 32px;
-  }
-  .admin-head{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:16px;flex-wrap:wrap;gap:10px;
-  }
-  .admin-head h3{font-family:'Space Mono',monospace;font-size:14px;margin:0;}
-  .admin-actions{display:flex;gap:10px;}
-  .mini-btn{
-    font-family:'Space Mono',monospace;
-    font-size:11.5px;
-    padding:8px 14px;
-    border:1px solid var(--ink);
-    background:var(--surface);
-    color:var(--ink);
-    border-radius:var(--radius);
-    cursor:pointer;
-  }
-  .mini-btn:hover{background:var(--ink);color:var(--paper);}
-  .admin-table-wrap{overflow-x:auto;}
-  table.admin-table{width:100%;border-collapse:collapse;font-size:12.5px;}
-  table.admin-table th{
-    font-family:'Space Mono',monospace;
-    text-align:left;font-weight:600;
-    padding:8px 10px;
-    border-bottom:2px solid var(--ink);
-    color:var(--ink-soft);
-    white-space:nowrap;
-  }
-  table.admin-table td{
-    padding:8px 10px;
-    border-bottom:1px solid var(--border);
-    vertical-align:top;
-  }
-  .empty-state{
-    text-align:center;color:var(--ink-faint);
-    font-size:13px;padding:30px 0;
-  }
-
+  /* ========== RESPONSIVE ========== */
   @media (max-width:640px){
-    .letterhead{padding:24px 20px 18px;}
-    .intro,.section,.footer{padding-left:16px;padding-right:16px;}
-    .field-row{grid-template-columns:1fr;}
-    .mat-row{grid-template-columns:1fr;gap:6px;}
-    .remove-row{justify-self:end;}
-    h1{font-size:21px;}
+    .pref-table{min-width:420px;}
+    .pref-table th{padding:4px 0 8px;font-size:11px;}
+    .pref-table td{padding:2px;}
+    .hour-label{font-size:11px;}
+    .mark-cell{min-height:44px;font-size:16px;}
+
+    .letterhead{padding:20px 16px 16px;}
+    .intro{padding:16px 16px 0;font-size:14px;}
+    .section{padding:20px 16px;}
+    .footer{padding:16px 16px 24px;}
+    h1{font-size:20px;}
+    .course-tag{font-size:11px;padding:4px 10px;}
+    .field-row{grid-template-columns:1fr;gap:12px;}
+    .field input,.field select{font-size:16px;padding:12px 14px;}
+    .counters{gap:12px;font-size:12px;}
+    .grid-help{font-size:12.5px;}
+
+    .mat-row{padding:12px;}
+    .mat-row input,.mat-row select{font-size:16px;padding:12px 14px;}
+    .remove-row{font-size:22px;padding:6px 10px;}
+    .add-row{font-size:13px;padding:12px 16px;}
+    .total-line{font-size:12px;}
+    textarea{font-size:16px;padding:12px 14px;}
+
+    .submit-btn{font-size:16px;padding:18px;}
+    .confirm{padding:40px 20px;}
+    .confirm h2{font-size:18px;}
+    .validation-msg{font-size:12px;}
+  }
+
+  @media (max-width:400px){
+    .pref-table{min-width:360px;}
+    .mark-cell{min-height:40px;font-size:14px;}
+    .pref-table th{font-size:10px;padding:4px 0 6px;}
+    .hour-label{font-size:10px;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -407,7 +423,26 @@
       </div>
       <div class="field">
         <label for="fDepto">Departamento</label>
-        <input type="text" id="fDepto" placeholder="Ej. Informática">
+        <select id="fDepto">
+          <option value="">Selecciona...</option>
+          <option value="DIBUJO">DIBUJO</option>
+          <option value="BIOLOGÍA Y GEOLOGÍA">BIOLOGÍA Y GEOLOGÍA</option>
+          <option value="ECONOMÍA">ECONOMÍA</option>
+          <option value="EDUCACIÓN FÍSICA">EDUCACIÓN FÍSICA</option>
+          <option value="FILOSOFÍA">FILOSOFÍA</option>
+          <option value="FÍSICA Y QUÍMICA">FÍSICA Y QUÍMICA</option>
+          <option value="FRANCÉS">FRANCÉS</option>
+          <option value="GEOGRAFÍA E HISTORIA">GEOGRAFÍA E HISTORIA</option>
+          <option value="INFORMÁTICA Y COMUNICACIONES">INFORMÁTICA Y COMUNICACIONES</option>
+          <option value="INGLÉS">INGLÉS</option>
+          <option value="LATÍN">LATÍN</option>
+          <option value="LENGUA">LENGUA</option>
+          <option value="MATEMÁTICAS">MATEMÁTICAS</option>
+          <option value="MÚSICA">MÚSICA</option>
+          <option value="RELIGIÓN">RELIGIÓN</option>
+          <option value="TECNOLOGÍA">TECNOLOGÍA</option>
+          <option value="ORIENTACIÓN">ORIENTACIÓN</option>
+        </select>
       </div>
     </div>
     <div class="field-row" style="grid-template-columns:1fr;">
@@ -424,7 +459,7 @@
     <div class="pref-table-wrap">
       <table class="pref-table">
         <colgroup>
-          <col style="width:30px;">
+          <col style="width:36px;">
           <col><col><col><col><col>
         </colgroup>
         <thead>
@@ -464,12 +499,11 @@
   <button class="link-btn" id="anotherBtn">Enviar otra respuesta</button>
 </div>
 
-<div class="admin-toggle"><a id="sheetLink" href="#" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:0.08em;color:var(--ink-faint);text-transform:uppercase;text-decoration:none;">Ver todas las respuestas (hoja de cálculo) →</a></div>
+<div class="admin-toggle"><a id="sheetLink" href="#" target="_blank" rel="noopener">Ver todas las respuestas (hoja de cálculo) →</a></div>
 
 <script>
 /* ======= CONFIGURACIÓN =======
    Pega aquí la URL de tu implementación de Google Apps Script
-   (ver instrucciones de configuración que te ha dado Claude).
 */
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPQVAJ1dJMEW3WEoVb8y11b3253-uII7YEC286YpH1TXs5gxIZO9T_AKuEF1gXzD4wgg/exec';
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17-APNbZoMxMsM-urgABLdMqJgAujbIeqt-wwQ-22vh4/edit?gid=0#gid=0';
@@ -478,6 +512,14 @@ const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17-APNbZoMxMsM-urgABLd
 const DAYS = ['L','M','Mi','J','V'];
 const DAY_LABELS = ['L','M','X','J','V'];
 const HOURS = ['1ª','2ª','3ª','4ª','5ª','6ª'];
+
+// Lista de cursos para el desplegable
+const CURSOS = [
+  '1º ESO', '2º ESO', '3º ESO', '3º DIV', '4º ESO', '4º DIV',
+  '1º BACH', '2º BACH',
+  '1º SMR', '2º SMR',
+  '1º IFCB', '2º IFCB'
+];
 
 let pref = HOURS.map(() => ({L:'',M:'',Mi:'',J:'',V:''}));
 let materias = [{materia:'',curso:'',horas:''}];
@@ -532,21 +574,45 @@ function renderPref(){
   countZeroEl.className = 'val ' + (cz === 2 ? 'ok' : cz > 2 ? 'bad' : '');
 }
 
+// Función para crear el HTML de un select de cursos
+function cursoSelectHTML(selected){
+  let html = `<select data-field="curso" data-idx="0">`;
+  html += `<option value="">Curso</option>`;
+  CURSOS.forEach(c => {
+    const sel = (c === selected) ? ' selected' : '';
+    html += `<option value="${escapeAttr(c)}"${sel}>${c}</option>`;
+  });
+  html += `</select>`;
+  return html;
+}
+
 function renderMaterias(){
   matRows.innerHTML = '';
   materias.forEach((m, i) => {
     const row = document.createElement('div');
     row.className = 'mat-row';
+    // Construimos el HTML con los campos: materia (input), curso (select), horas (input) y botón eliminar
+    const selectCurso = cursoSelectHTML(m.curso).replace(/data-idx="0"/, `data-idx="${i}"`);
     row.innerHTML = `
       <input type="text" placeholder="Materia" value="${escapeAttr(m.materia)}" data-field="materia" data-idx="${i}">
-      <input type="text" placeholder="Curso" value="${escapeAttr(m.curso)}" data-field="curso" data-idx="${i}">
+      ${selectCurso}
       <input type="number" min="0" step="0.5" placeholder="Horas" value="${escapeAttr(m.horas)}" data-field="horas" data-idx="${i}">
       <button type="button" class="remove-row" data-idx="${i}" title="Eliminar fila">×</button>
     `;
     matRows.appendChild(row);
   });
-  matRows.querySelectorAll('input').forEach(inp => {
-    inp.addEventListener('input', (e) => {
+
+  // Asignar eventos a todos los campos (input y select)
+  matRows.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('input', (e) => {
+      const idx = +e.target.dataset.idx;
+      const field = e.target.dataset.field;
+      materias[idx][field] = e.target.value;
+      updateTotal();
+      validate();
+    });
+    // También escuchamos 'change' por si el select no dispara 'input' en algunos navegadores
+    el.addEventListener('change', (e) => {
       const idx = +e.target.dataset.idx;
       const field = e.target.dataset.field;
       materias[idx][field] = e.target.value;
@@ -554,6 +620,7 @@ function renderMaterias(){
       validate();
     });
   });
+
   matRows.querySelectorAll('.remove-row').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const idx = +e.target.dataset.idx;
@@ -583,6 +650,7 @@ document.getElementById('addRowBtn').addEventListener('click', () => {
 
 function validate(){
   const nombre = document.getElementById('fNombre').value.trim();
+  const depto = document.getElementById('fDepto').value;
   let cx = 0, cz = 0;
   pref.forEach(row => DAYS.forEach(d => {
     if(row[d] === 'X') cx++;
@@ -592,6 +660,7 @@ function validate(){
 
   let msg = '';
   if(!nombre) msg = 'Indica tu nombre y apellidos.';
+  else if(!depto) msg = 'Selecciona un departamento.';
   else if(cx !== 3 || cz !== 2) msg = 'Debes marcar exactamente 3 X y 2 ceros en la cuadrícula de preferencias.';
   else if(!hasMateria) msg = 'Añade al menos una materia.';
 
@@ -602,17 +671,17 @@ function validate(){
 
 ['fNombre','fDepto','fTelefono'].forEach(id => {
   document.getElementById(id).addEventListener('input', validate);
+  // Para el select también necesitamos 'change'
+  if(id === 'fDepto'){
+    document.getElementById(id).addEventListener('change', validate);
+  }
 });
-
-function sanitizeKeyPart(s){
-  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
-}
 
 submitBtn.addEventListener('click', async () => {
   if(!validate()) return;
 
   if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('PEGA_AQUI') === 0){
-    alert('Este formulario todavía no está conectado a la hoja de cálculo. Falta configurar APPS_SCRIPT_URL en el código (ver instrucciones de configuración).');
+    alert('Este formulario todavía no está conectado a la hoja de cálculo. Falta configurar APPS_SCRIPT_URL.');
     return;
   }
 
@@ -621,7 +690,7 @@ submitBtn.addEventListener('click', async () => {
 
   const record = {
     nombre: document.getElementById('fNombre').value.trim(),
-    departamento: document.getElementById('fDepto').value.trim(),
+    departamento: document.getElementById('fDepto').value,
     telefono: document.getElementById('fTelefono').value.trim(),
     preferenciasTexto: summarizePref(pref),
     preferenciasJSON: JSON.stringify(pref),
@@ -634,14 +703,12 @@ submitBtn.addEventListener('click', async () => {
   };
 
   try{
-    // text/plain evita el preflight CORS; Apps Script igualmente lee JSON del body.
     await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: {'Content-Type': 'text/plain;charset=utf-8'},
       body: JSON.stringify(record)
     });
-    // Con mode:'no-cors' no podemos leer la respuesta; asumimos éxito si fetch no lanza error.
     document.getElementById('formSheet').style.display = 'none';
     document.getElementById('confirmSheet').style.display = 'block';
   }catch(err){
@@ -668,7 +735,6 @@ document.getElementById('anotherBtn').addEventListener('click', () => {
   document.getElementById('formSheet').style.display = 'block';
 });
 
-/* ---------- Enlace a la hoja de cálculo ---------- */
 const sheetLinkEl = document.getElementById('sheetLink');
 if(SHEET_URL && SHEET_URL.indexOf('PEGA_AQUI') !== 0){
   sheetLinkEl.href = SHEET_URL;
@@ -686,10 +752,6 @@ function summarizePref(pref){
     });
   });
   return parts.join(', ');
-}
-
-function escapeHtml(v){
-  return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 renderPref();
