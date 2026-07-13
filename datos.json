@@ -1,0 +1,834 @@
+{
+  "departamentos": [
+    {
+      "nombre": "DIBUJO",
+      "materias": [
+        {
+          "nombre": "Educación Plástica, Visual y Audiovisual",
+          "cursos": ["1º ESO", "3º ESO"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "MAE",
+          "cursos": ["2º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Expresión artística",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Dibujo Técnico I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Dibujo Técnico II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría",
+          "cursos": ["1º ESO", "3º ESO"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "BIOLOGÍA Y GEOLOGÍA",
+      "materias": [
+        {
+          "nombre": "Biología y Geología",
+          "cursos": ["1º ESO", "3º ESO", "4º ESO"],
+          "horas_posibles": [2, 3, 4]
+        },
+        {
+          "nombre": "Biología, Geología y Ciencias Ambientales",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Anatomía Aplicada",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Biología",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Ciencias Aplicadas I",
+          "cursos": ["1º FPB"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Ciencias Aplicadas II",
+          "cursos": ["2º FPB"],
+          "horas_posibles": [6]
+        },
+        {
+          "nombre": "MAE",
+          "cursos": ["1º ESO"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría",
+          "cursos": ["E-1º"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "ECONOMÍA",
+      "materias": [
+        {
+          "nombre": "Iniciación Act. Emprend. y Empresarial",
+          "cursos": ["3º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Economía y emprendimiento",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Educación financiera",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Economía",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Empresa y diseño de modelos de negocio",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Fundamentos de Administración y Gestión",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Itinerario personal para la empleabilidad",
+          "cursos": ["1º FPB", "1º SMR", "2º SMR"],
+          "horas_posibles": [2, 3]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "EDUCACIÓN FÍSICA",
+      "materias": [
+        {
+          "nombre": "EF",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º ESO", "1º BACH"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Formación Física I",
+          "cursos": ["1º FPB"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Formación Física II",
+          "cursos": ["2º FPB"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Actividades deportivas",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [1]
+        }
+      ]
+    },
+    {
+      "nombre": "FILOSOFÍA",
+      "materias": [
+        {
+          "nombre": "Educación en Valores Cívicos y Éticos",
+          "cursos": ["3º ESO"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Taller de Filosofía",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Filosofía",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Historia de la Filosofía",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "MAE",
+          "cursos": ["1º ESO", "3º ESO"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Tutoría B-1º",
+          "cursos": ["B-1º"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        }
+      ]
+    },
+    {
+      "nombre": "FÍSICA Y QUÍMICA",
+      "materias": [
+        {
+          "nombre": "Física y Química",
+          "cursos": ["2º ESO", "3º ESO", "4º ESO", "1º BACH"],
+          "horas_posibles": [2, 3, 4]
+        },
+        {
+          "nombre": "Laboratorio de Ciencias",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Física",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Química",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría E-2º",
+          "cursos": ["E-2º"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tutorías Bach 1º",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Codocencia",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "FRANCÉS",
+      "materias": [
+        {
+          "nombre": "Francés",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º ESO", "1º BACH", "2º BACH"],
+          "horas_posibles": [2, 4]
+        },
+        {
+          "nombre": "CLEN",
+          "cursos": ["2º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "MAE",
+          "cursos": ["2º ESO", "4º ESO"],
+          "horas_posibles": [1, 2]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Formación + CFIE",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "GEOGRAFÍA E HISTORIA",
+      "materias": [
+        {
+          "nombre": "Geografía e Historia",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º ESO"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Historia Mundo Contemporáneo",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Historia de España",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Geografía",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Hª del Arte",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "MAE",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría E-4º",
+          "cursos": ["E-4º"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tutoría Bach 2º",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Jefatura de Estudios",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [10]
+        },
+        {
+          "nombre": "Coordinadora Convivencia",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        }
+      ]
+    },
+    {
+      "nombre": "INFORMÁTICA Y COMUNICACIONES",
+      "materias": [
+        {
+          "nombre": "Programación Informática (INF)",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Aplicaciones ofimáticas (SIF)",
+          "cursos": ["1º SMR"],
+          "horas_posibles": [6]
+        },
+        {
+          "nombre": "Aplicaciones web (INF)",
+          "cursos": ["1º SMR"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Redes locales (INF)",
+          "cursos": ["1º SMR"],
+          "horas_posibles": [7]
+        },
+        {
+          "nombre": "Sistemas operativos monopuesto (SIF)",
+          "cursos": ["1º SMR"],
+          "horas_posibles": [7]
+        },
+        {
+          "nombre": "Innovación aplicada al sector productivo (Módulo optativo I)",
+          "cursos": ["1º SMR"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Montaje y mantenimiento de equipo (SIF)",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [7]
+        },
+        {
+          "nombre": "Seguridad Informática (INF)",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Servicios en Red (INF)",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [6]
+        },
+        {
+          "nombre": "Sistemas operativos en red (SIF)",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [6]
+        },
+        {
+          "nombre": "Digitalización Aplicada a los Sectores Productivos",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Sostenibilidad Aplicada al Sistema Productivo",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Fundamentos de Programación (Módulo optativo II)",
+          "cursos": ["2º SMR"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Equipos Eléctricos y Electrónicos (SIF)",
+          "cursos": ["1º IFCB"],
+          "horas_posibles": [7]
+        },
+        {
+          "nombre": "Montaje y Mantenimiento de Sistemas (SIF)",
+          "cursos": ["1º IFCB"],
+          "horas_posibles": [10]
+        },
+        {
+          "nombre": "Instalación y Mantenimiento de redes (SIF)",
+          "cursos": ["2º IFCB"],
+          "horas_posibles": [8]
+        },
+        {
+          "nombre": "Operación Configuración y explotación (SIF)",
+          "cursos": ["2º IFCB"],
+          "horas_posibles": [8]
+        },
+        {
+          "nombre": "FFE GM",
+          "cursos": ["SMR"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "FFE FPB",
+          "cursos": ["FPB"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "RESPONSABLE TIC",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Tutoría",
+          "cursos": ["1º IFPB", "2º IFBB"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "Secretaría",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [10]
+        }
+      ]
+    },
+    {
+      "nombre": "INGLÉS",
+      "materias": [
+        {
+          "nombre": "Inglés",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º ESO", "1º BACH", "2º BACH"],
+          "horas_posibles": [3, 4]
+        },
+        {
+          "nombre": "Comunicación y sociedad I",
+          "cursos": ["1º IFCB"],
+          "horas_posibles": [5]
+        },
+        {
+          "nombre": "Comunicación y sociedad II",
+          "cursos": ["2º IFCB"],
+          "horas_posibles": [6]
+        },
+        {
+          "nombre": "Inglés Profesional",
+          "cursos": ["1º SMR"],
+          "horas_posibles": [1]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "JEFATURA ADJUNTA",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [8]
+        },
+        {
+          "nombre": "Tutoría E-DIV",
+          "cursos": ["E-DIV"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tutoría Bach 2º",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [1]
+        }
+      ]
+    },
+    {
+      "nombre": "LATÍN",
+      "materias": [
+        {
+          "nombre": "Cultura Clásica",
+          "cursos": ["2º ESO", "4º ESO"],
+          "horas_posibles": [2, 3]
+        },
+        {
+          "nombre": "Latín",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Latín I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Griego I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Latín II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Griego II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Tutoría E2",
+          "cursos": ["2º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Dirección",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [10]
+        }
+      ]
+    },
+    {
+      "nombre": "LENGUA",
+      "materias": [
+        {
+          "nombre": "Lengua Castellana y Literatura",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º ESO", "1º BACH", "2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "CLEN",
+          "cursos": ["1º ESO", "3º ESO", "4º ESO DIV"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Ámbito Lingüístico y social",
+          "cursos": ["3º ESO DIV", "4º ESO DIV"],
+          "horas_posibles": [7]
+        },
+        {
+          "nombre": "Literatura Universal",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Biblioteca y Fomento de la Lectura",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "MATEMÁTICAS",
+      "materias": [
+        {
+          "nombre": "Matemáticas",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "CMAT",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º DIV"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Matemáticas A",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Matemáticas B",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Matemáticas I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Matemáticas APLIC I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Matemáticas II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Matemáticas APLIC II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "JEF. ADJUNTA",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [8]
+        },
+        {
+          "nombre": "Liberación Sindical",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría E 3º",
+          "cursos": ["E 3º"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tutoría Bach 2º",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [1]
+        }
+      ]
+    },
+    {
+      "nombre": "MÚSICA",
+      "materias": [
+        {
+          "nombre": "Música",
+          "cursos": ["2º ESO", "3º ESO", "4º ESO"],
+          "horas_posibles": [2, 3]
+        },
+        {
+          "nombre": "Taller Expresión Musical",
+          "cursos": ["3º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría E-2º",
+          "cursos": ["E-2º"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "RELIGIÓN",
+      "materias": [
+        {
+          "nombre": "Religión",
+          "cursos": ["1º ESO", "2º ESO", "3º ESO", "4º ESO", "1º BACH"],
+          "horas_posibles": [1, 2]
+        },
+        {
+          "nombre": "Otras Actividades",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "JDEP EXTR",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría",
+          "cursos": ["3º ESO"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "TECNOLOGÍA",
+      "materias": [
+        {
+          "nombre": "Tecnología y digitalización",
+          "cursos": ["1º ESO", "3º ESO"],
+          "horas_posibles": [2, 3]
+        },
+        {
+          "nombre": "Control y Robótica",
+          "cursos": ["3º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Ámbito práctico",
+          "cursos": ["3º DIV", "4º DIV"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tecnología",
+          "cursos": ["4º ESO"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tecnología e Ingeniería I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Tecnología de la Información y Comunicación I",
+          "cursos": ["1º BACH"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tecnología e Ingeniería II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Tecnología de la Información y Comunicación II",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Responsable Equipos Informáticos",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Tutoría E-1º",
+          "cursos": ["E-1º"],
+          "horas_posibles": [2]
+        }
+      ]
+    },
+    {
+      "nombre": "ORIENTACIÓN",
+      "materias": [
+        {
+          "nombre": "Psicología",
+          "cursos": ["2º BACH"],
+          "horas_posibles": [4]
+        },
+        {
+          "nombre": "Horas orientación",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [20]
+        },
+        {
+          "nombre": "Ámbito Científico-Tecnológico",
+          "cursos": ["3ºESO DIV", "4º ESO DIV"],
+          "horas_posibles": [8]
+        },
+        {
+          "nombre": "FOPP",
+          "cursos": ["4º ESO DIV"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "PT",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [18]
+        },
+        {
+          "nombre": "COMPENSATORIA",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [18]
+        },
+        {
+          "nombre": "PTSC",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [9]
+        },
+        {
+          "nombre": "JDEP",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        },
+        {
+          "nombre": "Tutoría E-DIV",
+          "cursos": ["E-DIV"],
+          "horas_posibles": [2]
+        },
+        {
+          "nombre": "Reducción sindical",
+          "cursos": ["Sin curso"],
+          "horas_posibles": [3]
+        }
+      ]
+    }
+  ]
+}

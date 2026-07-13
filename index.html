@@ -224,8 +224,8 @@
     border:1px solid var(--border);
     margin-bottom:12px;
   }
-  .mat-row input,
-  .mat-row select{
+  .mat-row select,
+  .mat-row input{
     font-family:'Inter',sans-serif;
     font-size:14px;
     padding:9px 11px;
@@ -238,8 +238,8 @@
     -webkit-appearance:none;
     appearance:none;
   }
-  .mat-row input:focus,
-  .mat-row select:focus{border-color:var(--ink);}
+  .mat-row select:focus,
+  .mat-row input:focus{border-color:var(--ink);}
   .remove-row{
     align-self:flex-end;
     background:none;
@@ -377,7 +377,8 @@
     .grid-help{font-size:12.5px;}
 
     .mat-row{padding:12px;}
-    .mat-row input,.mat-row select{font-size:16px;padding:12px 14px;}
+    .mat-row select,
+    .mat-row input{font-size:16px;padding:12px 14px;}
     .remove-row{font-size:22px;padding:6px 10px;}
     .add-row{font-size:13px;padding:12px 16px;}
     .total-line{font-size:12px;}
@@ -424,24 +425,7 @@
       <div class="field">
         <label for="fDepto">Departamento</label>
         <select id="fDepto">
-          <option value="">Selecciona...</option>
-          <option value="DIBUJO">DIBUJO</option>
-          <option value="BIOLOGÍA Y GEOLOGÍA">BIOLOGÍA Y GEOLOGÍA</option>
-          <option value="ECONOMÍA">ECONOMÍA</option>
-          <option value="EDUCACIÓN FÍSICA">EDUCACIÓN FÍSICA</option>
-          <option value="FILOSOFÍA">FILOSOFÍA</option>
-          <option value="FÍSICA Y QUÍMICA">FÍSICA Y QUÍMICA</option>
-          <option value="FRANCÉS">FRANCÉS</option>
-          <option value="GEOGRAFÍA E HISTORIA">GEOGRAFÍA E HISTORIA</option>
-          <option value="INFORMÁTICA Y COMUNICACIONES">INFORMÁTICA Y COMUNICACIONES</option>
-          <option value="INGLÉS">INGLÉS</option>
-          <option value="LATÍN">LATÍN</option>
-          <option value="LENGUA">LENGUA</option>
-          <option value="MATEMÁTICAS">MATEMÁTICAS</option>
-          <option value="MÚSICA">MÚSICA</option>
-          <option value="RELIGIÓN">RELIGIÓN</option>
-          <option value="TECNOLOGÍA">TECNOLOGÍA</option>
-          <option value="ORIENTACIÓN">ORIENTACIÓN</option>
+          <option value="">Cargando...</option>
         </select>
       </div>
     </div>
@@ -509,20 +493,13 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPQVAJ1dJMEW3W
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17-APNbZoMxMsM-urgABLdMqJgAujbIeqt-wwQ-22vh4/edit?gid=0#gid=0';
 /* ============================== */
 
+// Variables globales
+let data = null;
+let materias = [{materia:'', curso:'', horas:''}]; // Estado de cada fila
+
 const DAYS = ['L','M','Mi','J','V'];
 const DAY_LABELS = ['L','M','X','J','V'];
 const HOURS = ['1ª','2ª','3ª','4ª','5ª','6ª'];
-
-// Lista de cursos para el desplegable
-const CURSOS = [
-  '1º ESO', '2º ESO', '3º ESO', '3º DIV', '4º ESO', '4º DIV',
-  '1º BACH', '2º BACH',
-  '1º SMR', '2º SMR',
-  '1º IFCB', '2º IFCB'
-];
-
-let pref = HOURS.map(() => ({L:'',M:'',Mi:'',J:'',V:''}));
-let materias = [{materia:'',curso:'',horas:''}];
 
 const prefBody = document.getElementById('prefBody');
 const matRows = document.getElementById('matRows');
@@ -531,7 +508,34 @@ const countZeroEl = document.getElementById('countZero');
 const totalHorasEl = document.getElementById('totalHoras');
 const submitBtn = document.getElementById('submitBtn');
 const validationMsg = document.getElementById('validationMsg');
+const deptoSelect = document.getElementById('fDepto');
 
+// --- Funciones auxiliares ---
+function escapeAttr(v) {
+  return String(v).replace(/"/g,'&quot;');
+}
+
+// Obtener materias de un departamento
+function getMaterias(deptoNombre) {
+  const depto = data.departamentos.find(d => d.nombre === deptoNombre);
+  return depto ? depto.materias : [];
+}
+
+// Obtener cursos de una materia (dado su nombre y departamento)
+function getCursos(deptoNombre, materiaNombre) {
+  const materias = getMaterias(deptoNombre);
+  const mat = materias.find(m => m.nombre === materiaNombre);
+  return mat ? mat.cursos : [];
+}
+
+// Obtener horas posibles de una materia (dado su nombre y departamento)
+function getHorasPosibles(deptoNombre, materiaNombre) {
+  const materias = getMaterias(deptoNombre);
+  const mat = materias.find(m => m.nombre === materiaNombre);
+  return mat ? mat.horas_posibles : [];
+}
+
+// --- Renderizado de preferencias (sin cambios) ---
 function cycleMark(v){
   if(v === '') return 'X';
   if(v === 'X') return '0';
@@ -574,109 +578,242 @@ function renderPref(){
   countZeroEl.className = 'val ' + (cz === 2 ? 'ok' : cz > 2 ? 'bad' : '');
 }
 
-// Función para crear el HTML de un select de cursos
-function cursoSelectHTML(selected){
-  let html = `<select data-field="curso" data-idx="0">`;
-  html += `<option value="">Curso</option>`;
-  CURSOS.forEach(c => {
-    const sel = (c === selected) ? ' selected' : '';
-    html += `<option value="${escapeAttr(c)}"${sel}>${c}</option>`;
-  });
-  html += `</select>`;
-  return html;
-}
-
-function renderMaterias(){
+// --- Renderizado de materias (con selects) ---
+function renderMaterias() {
   matRows.innerHTML = '';
+  const depto = deptoSelect.value;
+  const materiasDisponibles = depto ? getMaterias(depto) : [];
+
   materias.forEach((m, i) => {
     const row = document.createElement('div');
     row.className = 'mat-row';
-    // Construimos el HTML con los campos: materia (input), curso (select), horas (input) y botón eliminar
-    const selectCurso = cursoSelectHTML(m.curso).replace(/data-idx="0"/, `data-idx="${i}"`);
-    row.innerHTML = `
-      <input type="text" placeholder="Materia" value="${escapeAttr(m.materia)}" data-field="materia" data-idx="${i}">
-      ${selectCurso}
-      <input type="number" min="0" step="0.5" placeholder="Horas" value="${escapeAttr(m.horas)}" data-field="horas" data-idx="${i}">
-      <button type="button" class="remove-row" data-idx="${i}" title="Eliminar fila">×</button>
-    `;
+
+    // Select de materia
+    const materiaSelect = document.createElement('select');
+    materiaSelect.dataset.field = 'materia';
+    materiaSelect.dataset.idx = i;
+    materiaSelect.className = 'materia-select';
+    const emptyOpt = document.createElement('option');
+    emptyOpt.value = '';
+    emptyOpt.textContent = 'Selecciona materia';
+    materiaSelect.appendChild(emptyOpt);
+    materiasDisponibles.forEach(mat => {
+      const opt = document.createElement('option');
+      opt.value = mat.nombre;
+      opt.textContent = mat.nombre;
+      if (mat.nombre === m.materia) opt.selected = true;
+      materiaSelect.appendChild(opt);
+    });
+    row.appendChild(materiaSelect);
+
+    // Select de curso
+    const cursoSelect = document.createElement('select');
+    cursoSelect.dataset.field = 'curso';
+    cursoSelect.dataset.idx = i;
+    cursoSelect.className = 'curso-select';
+    const emptyCurso = document.createElement('option');
+    emptyCurso.value = '';
+    emptyCurso.textContent = 'Curso';
+    cursoSelect.appendChild(emptyCurso);
+    // Si hay materia seleccionada, rellenar cursos
+    if (m.materia && depto) {
+      const cursos = getCursos(depto, m.materia);
+      cursos.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        if (c === m.curso) opt.selected = true;
+        cursoSelect.appendChild(opt);
+      });
+    }
+    row.appendChild(cursoSelect);
+
+    // Select de horas
+    const horasSelect = document.createElement('select');
+    horasSelect.dataset.field = 'horas';
+    horasSelect.dataset.idx = i;
+    horasSelect.className = 'horas-select';
+    const emptyHoras = document.createElement('option');
+    emptyHoras.value = '';
+    emptyHoras.textContent = 'Horas';
+    horasSelect.appendChild(emptyHoras);
+    if (m.materia && depto) {
+      const horas = getHorasPosibles(depto, m.materia);
+      horas.forEach(h => {
+        const opt = document.createElement('option');
+        opt.value = h;
+        opt.textContent = h + 'h';
+        if (h == m.horas) opt.selected = true;
+        horasSelect.appendChild(opt);
+      });
+    }
+    row.appendChild(horasSelect);
+
+    // Botón eliminar
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove-row';
+    removeBtn.dataset.idx = i;
+    removeBtn.textContent = '×';
+    removeBtn.title = 'Eliminar fila';
+    row.appendChild(removeBtn);
+
     matRows.appendChild(row);
   });
 
-  // Asignar eventos a todos los campos (input y select)
-  matRows.querySelectorAll('input, select').forEach(el => {
-    el.addEventListener('input', (e) => {
-      const idx = +e.target.dataset.idx;
-      const field = e.target.dataset.field;
-      materias[idx][field] = e.target.value;
-      updateTotal();
-      validate();
-    });
-    // También escuchamos 'change' por si el select no dispara 'input' en algunos navegadores
-    el.addEventListener('change', (e) => {
-      const idx = +e.target.dataset.idx;
-      const field = e.target.dataset.field;
-      materias[idx][field] = e.target.value;
-      updateTotal();
-      validate();
-    });
+  // Asignar eventos a los selects
+  matRows.querySelectorAll('.materia-select').forEach(sel => {
+    sel.addEventListener('change', onMateriaChange);
   });
-
+  matRows.querySelectorAll('.curso-select').forEach(sel => {
+    sel.addEventListener('change', onCursoChange);
+  });
+  matRows.querySelectorAll('.horas-select').forEach(sel => {
+    sel.addEventListener('change', onHorasChange);
+  });
   matRows.querySelectorAll('.remove-row').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const idx = +e.target.dataset.idx;
-      if(materias.length > 1){
-        materias.splice(idx, 1);
-        renderMaterias();
-        updateTotal();
-        validate();
-      }
-    });
+    btn.addEventListener('click', onRemoveRow);
   });
+
+  // Actualizar total y validar
+  updateTotal();
+  validate();
 }
 
-function escapeAttr(v){
-  return String(v).replace(/"/g,'&quot;');
+// --- Eventos de las filas ---
+function onMateriaChange(e) {
+  const sel = e.target;
+  const idx = parseInt(sel.dataset.idx);
+  const depto = deptoSelect.value;
+  const materia = sel.value;
+  materias[idx].materia = materia;
+  // Resetear curso y horas
+  materias[idx].curso = '';
+  materias[idx].horas = '';
+  // Re-renderizar solo esa fila? Para simplificar, re-renderizamos todas
+  renderMaterias();
 }
 
-function updateTotal(){
-  const t = materias.reduce((s,m) => s + (parseFloat(m.horas) || 0), 0);
-  totalHorasEl.textContent = t;
+function onCursoChange(e) {
+  const sel = e.target;
+  const idx = parseInt(sel.dataset.idx);
+  materias[idx].curso = sel.value;
+  updateTotal();
+  validate();
 }
 
+function onHorasChange(e) {
+  const sel = e.target;
+  const idx = parseInt(sel.dataset.idx);
+  materias[idx].horas = sel.value;
+  updateTotal();
+  validate();
+}
+
+function onRemoveRow(e) {
+  const idx = parseInt(e.target.dataset.idx);
+  if (materias.length > 1) {
+    materias.splice(idx, 1);
+    renderMaterias();
+  }
+}
+
+// --- Actualizar total ---
+function updateTotal() {
+  const total = materias.reduce((sum, m) => {
+    const h = parseFloat(m.horas);
+    return sum + (isNaN(h) ? 0 : h);
+  }, 0);
+  totalHorasEl.textContent = total;
+}
+
+// --- Cambio de departamento ---
+function onDeptoChange() {
+  const depto = deptoSelect.value;
+  // Resetear todas las filas: materia, curso, horas
+  materias.forEach(m => {
+    m.materia = '';
+    m.curso = '';
+    m.horas = '';
+  });
+  renderMaterias();
+}
+
+// --- Añadir fila ---
 document.getElementById('addRowBtn').addEventListener('click', () => {
-  materias.push({materia:'',curso:'',horas:''});
+  materias.push({materia:'', curso:'', horas:''});
   renderMaterias();
 });
 
-function validate(){
+// --- Validación ---
+function validate() {
   const nombre = document.getElementById('fNombre').value.trim();
-  const depto = document.getElementById('fDepto').value;
+  const depto = deptoSelect.value;
+
+  // Preferencias
   let cx = 0, cz = 0;
   pref.forEach(row => DAYS.forEach(d => {
     if(row[d] === 'X') cx++;
     if(row[d] === '0') cz++;
   }));
-  const hasMateria = materias.some(m => m.materia.trim() !== '');
+
+  // Al menos una fila con materia, curso y horas seleccionados
+  const hasValidMateria = materias.some(m => m.materia && m.curso && m.horas);
 
   let msg = '';
   if(!nombre) msg = 'Indica tu nombre y apellidos.';
   else if(!depto) msg = 'Selecciona un departamento.';
   else if(cx !== 3 || cz !== 2) msg = 'Debes marcar exactamente 3 X y 2 ceros en la cuadrícula de preferencias.';
-  else if(!hasMateria) msg = 'Añade al menos una materia.';
+  else if(!hasValidMateria) msg = 'Añade al menos una materia completa (materia, curso y horas).';
 
   validationMsg.textContent = msg;
   submitBtn.disabled = !!msg;
   return !msg;
 }
 
-['fNombre','fDepto','fTelefono'].forEach(id => {
-  document.getElementById(id).addEventListener('input', validate);
-  // Para el select también necesitamos 'change'
-  if(id === 'fDepto'){
-    document.getElementById(id).addEventListener('change', validate);
-  }
-});
+// --- Inicialización ---
+function initForm() {
+  // Poblar departamentos
+  deptoSelect.innerHTML = '<option value="">Selecciona...</option>';
+  data.departamentos.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.nombre;
+    opt.textContent = d.nombre;
+    deptoSelect.appendChild(opt);
+  });
 
+  // Evento cambio de departamento
+  deptoSelect.addEventListener('change', onDeptoChange);
+
+  // Eventos de campos de contacto para validación
+  ['fNombre','fTelefono'].forEach(id => {
+    document.getElementById(id).addEventListener('input', validate);
+  });
+
+  // Cargar preferencias iniciales
+  renderPref();
+
+  // Inicializar materias (una fila vacía)
+  materias = [{materia:'', curso:'', horas:''}];
+  renderMaterias();
+}
+
+// --- Cargar JSON ---
+fetch('datos.json')
+  .then(response => {
+    if (!response.ok) throw new Error('No se pudo cargar datos.json');
+    return response.json();
+  })
+  .then(json => {
+    data = json;
+    initForm();
+  })
+  .catch(error => {
+    console.error('Error cargando datos:', error);
+    deptoSelect.innerHTML = '<option value="">Error al cargar datos</option>';
+  });
+
+// --- Envío (sin cambios relevantes) ---
 submitBtn.addEventListener('click', async () => {
   if(!validate()) return;
 
@@ -690,13 +827,13 @@ submitBtn.addEventListener('click', async () => {
 
   const record = {
     nombre: document.getElementById('fNombre').value.trim(),
-    departamento: document.getElementById('fDepto').value,
+    departamento: deptoSelect.value,
     telefono: document.getElementById('fTelefono').value.trim(),
     preferenciasTexto: summarizePref(pref),
     preferenciasJSON: JSON.stringify(pref),
-    materiasTexto: materias.filter(m => m.materia.trim() !== '')
-      .map(m => `${m.materia}${m.curso ? ' ('+m.curso+')' : ''}: ${m.horas}h`).join(' | '),
-    materiasJSON: JSON.stringify(materias.filter(m => m.materia.trim() !== '')),
+    materiasTexto: materias.filter(m => m.materia && m.curso && m.horas)
+      .map(m => `${m.materia} (${m.curso}): ${m.horas}h`).join(' | '),
+    materiasJSON: JSON.stringify(materias.filter(m => m.materia && m.curso && m.horas)),
     totalHoras: materias.reduce((s,m) => s + (parseFloat(m.horas) || 0), 0),
     observaciones: document.getElementById('fObs').value.trim(),
     fechaEnvio: new Date().toLocaleString('es-ES')
@@ -721,14 +858,13 @@ submitBtn.addEventListener('click', async () => {
 
 document.getElementById('anotherBtn').addEventListener('click', () => {
   pref = HOURS.map(() => ({L:'',M:'',Mi:'',J:'',V:''}));
-  materias = [{materia:'',curso:'',horas:''}];
+  materias = [{materia:'', curso:'', horas:''}];
   document.getElementById('fNombre').value = '';
-  document.getElementById('fDepto').value = '';
   document.getElementById('fTelefono').value = '';
   document.getElementById('fObs').value = '';
+  deptoSelect.value = '';
   renderPref();
   renderMaterias();
-  updateTotal();
   submitBtn.textContent = 'Enviar desiderata';
   validate();
   document.getElementById('confirmSheet').style.display = 'none';
@@ -754,10 +890,9 @@ function summarizePref(pref){
   return parts.join(', ');
 }
 
-renderPref();
-renderMaterias();
-updateTotal();
-validate();
+// Variables globales para preferencias (necesarias para renderPref)
+let pref = HOURS.map(() => ({L:'',M:'',Mi:'',J:'',V:''}));
+// Inicializar preferencias (se renderizará al cargar)
 </script>
 
 </body>
