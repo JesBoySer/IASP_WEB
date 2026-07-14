@@ -481,7 +481,7 @@
 
 <script>
 /* ======= CONFIGURACIÓN ======= */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsVaq8Jt4wmsGPpHztoffGUOn6Xbavbwzyf5G7MtPKfheBGGzZ_elgBrO9ix-fAHmUcw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPQVAJ1dJMEW3WEoVb8y11b3253-uII7YEC286YpH1TXs5gxIZO9T_AKuEF1gXzD4wgg/exec';
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/17-APNbZoMxMsM-urgABLdMqJgAujbIeqt-wwQ-22vh4/edit?gid=0#gid=0';
 /* ============================== */
 
@@ -806,6 +806,8 @@ submitBtn.addEventListener('click', async () => {
     if (result.status !== 'ok') {
       throw new Error(result.message || 'Error desconocido del servidor.');
     }
+    // --- DEBUG TEMPORAL: quita este alert cuando confirmes que todo va bien ---
+    alert('Guardado correctamente.\nHoja: ' + result.hojaUrl + '\nPestaña: ' + result.nombreHoja + '\nÚltima fila: ' + result.ultimaFila);
     document.getElementById('formSheet').style.display = 'none';
     document.getElementById('confirmSheet').style.display = 'block';
   } catch(err) {
